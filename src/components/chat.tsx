@@ -1,12 +1,12 @@
 'use client';
 
-import { useActionState, useEffect, useRef } from 'react';
+import { useActionState, useEffect, useRef, useState } from 'react';
 import { useFormStatus } from 'react-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { chatAction, type ChatState } from '@/app/actions';
-import { Loader2, Send, Bot } from 'lucide-react';
+import { Loader2, Send, Bot, Copy, Check } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from './ui/card';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
@@ -26,6 +26,31 @@ function SubmitButton() {
       <span className="sr-only">સંદેશ મોકલો</span>
     </Button>
   );
+}
+
+function CopyButton({ text }: { text: string }) {
+    const [isCopied, setIsCopied] = useState(false);
+    const { toast } = useToast();
+
+    const handleCopy = () => {
+        navigator.clipboard.writeText(text).then(() => {
+            setIsCopied(true);
+            toast({ title: 'નકલ કરેલ!', description: 'જવાબ ક્લિપબોર્ડ પર કૉપિ કરવામાં આવ્યો છે.' });
+            setTimeout(() => setIsCopied(false), 2000);
+        });
+    };
+
+    return (
+        <Button
+            onClick={handleCopy}
+            variant="ghost"
+            size="icon"
+            className="h-6 w-6 text-muted-foreground hover:bg-background/50 hover:text-foreground absolute top-1 right-1"
+        >
+            {isCopied ? <Check className="h-4 w-4 text-green-500" /> : <Copy className="h-4 w-4" />}
+            <span className="sr-only">જવાબ કૉપિ કરો</span>
+        </Button>
+    );
 }
 
 export function Chat() {
@@ -66,21 +91,24 @@ export function Chat() {
       <CardContent>
         <ScrollArea className="h-96 w-full pr-4" ref={scrollAreaRef}>
           <div className="space-y-4">
-            {state.messages.map((message, index) => (
+            {state.messages.map((message, index) => {
+              const messageText = message.content.map(part => part.text).join('');
+              return (
               <div
                 key={index}
                 className={cn(
-                  'flex max-w-[75%] flex-col gap-2 rounded-lg px-3 py-2 text-sm',
+                  'relative flex flex-col gap-2 rounded-lg px-3 py-2 text-sm',
                   message.role === 'user'
-                    ? 'ml-auto bg-primary text-primary-foreground'
-                    : 'bg-muted'
+                    ? 'ml-auto bg-primary text-primary-foreground max-w-[75%]'
+                    : 'bg-muted max-w-[75%]'
                 )}
               >
-                <p className="whitespace-pre-wrap break-words">
-                    {message.content.map((part, i) => part.text).join('')}
+                <p className="whitespace-pre-wrap break-words pr-8">
+                    {messageText}
                 </p>
+                {message.role === 'model' && <CopyButton text={messageText} />}
               </div>
-            ))}
+            )})}
              {isPending && (
                 <div className="flex items-center space-x-2">
                     <div className="flex-shrink-0 p-2 bg-muted rounded-full">
