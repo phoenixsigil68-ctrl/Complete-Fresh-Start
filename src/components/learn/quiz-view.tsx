@@ -39,7 +39,7 @@ export function QuizView({ chapter, grade, subject }: { chapter: Chapter; grade:
            <CardHeader>
             <CardTitle className="flex items-center">
                 <FileImage className="mr-3 text-primary"/>
-                Create Quiz with Image
+                 છબીમાંથી ક્વિઝ બનાવો
             </CardTitle>
             <CardDescription>પાઠ્યપુસ્તકના પૃષ્ઠની છબી અપલોડ કરીને ક્વિઝ બનાવો.</CardDescription>
           </CardHeader>
@@ -47,7 +47,7 @@ export function QuizView({ chapter, grade, subject }: { chapter: Chapter; grade:
              <Button asChild variant="outline">
                 <Link href="/quiz-from-image">
                     <Sparkles className="mr-2 h-5 w-5" />
-                    For Create Quiz with Image click here
+                    અહીં ક્લિક કરો
                 </Link>
              </Button>
           </CardContent>

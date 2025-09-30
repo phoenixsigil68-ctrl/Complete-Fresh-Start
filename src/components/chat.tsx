@@ -35,7 +35,7 @@ function CopyButton({ text }: { text: string }) {
     const handleCopy = () => {
         navigator.clipboard.writeText(text).then(() => {
             setIsCopied(true);
-            toast({ title: 'નકલ કરેલ!', description: 'જવાબ ક્લિપબોર્ડ પર કૉપિ કરવામાં આવ્યો છે.' });
+            toast({ title: 'Message copied!', description: 'જવાબ ક્લિપબોર્ડ પર કૉપિ કરવામાં આવ્યો છે.' });
             setTimeout(() => setIsCopied(false), 2000);
         });
     };

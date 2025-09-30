@@ -6,7 +6,7 @@ import { QuotesSlider } from '@/components/home/quotes-slider';
 import { DailyProgress } from '@/components/home/daily-progress';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { Sparkles, GraduationCap } from 'lucide-react';
+import { Sparkles, GraduationCap, MessageSquare } from 'lucide-react';
 
 export default function Home() {
   const heroImageData = placeholderImages.placeholderImages.find(img => img.id === 'hero-image');
@@ -51,11 +51,17 @@ export default function Home() {
             </CardContent>
         </Card>
         
-        <div className="lg:col-span-2 flex justify-center">
+        <div className="lg:col-span-2 flex flex-col sm:flex-row justify-center gap-4">
           <Button asChild variant="outline" size="lg" className="shadow-lg hover:shadow-primary/20 hover:bg-primary/5 transition-all duration-300 transform hover:-translate-y-1">
             <Link href="/quiz-from-image">
               <Sparkles className="mr-2 h-5 w-5 text-primary" />
               Create Quiz with Image
+            </Link>
+          </Button>
+           <Button asChild variant="outline" size="lg" className="shadow-lg hover:shadow-primary/20 hover:bg-primary/5 transition-all duration-300 transform hover:-translate-y-1">
+            <Link href="/chatbot">
+              <MessageSquare className="mr-2 h-5 w-5 text-primary" />
+              Chat with AI
             </Link>
           </Button>
         </div>
