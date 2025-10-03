@@ -8,6 +8,7 @@ import { FloatingChat } from '@/components/floating-chat';
 export const metadata: Metadata = {
   title: 'વિદ્યાર્થી સહાયક',
   description: 'ધોરણ ૯-૧૨ના વિદ્યાર્થીઓ માટે શૈક્ષણિક પ્લેટફોર્મ',
+  manifest: '/manifest.webmanifest',
 };
 
 export default function RootLayout({
@@ -25,6 +26,13 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap"
           rel="stylesheet"
         />
+        <meta name="application-name" content="વિદ્યાર્થી સહાયક" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-title" content="વિદ્યાર્થી સહાયક" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="theme-color" content="#10b981" />
       </head>
       <body className="font-body antialiased">
         <div className="relative min-h-screen">

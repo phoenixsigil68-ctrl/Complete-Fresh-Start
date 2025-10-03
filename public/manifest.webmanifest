@@ -1,0 +1,22 @@
+{
+  "name": "વિદ્યાર્થી સહાયક",
+  "short_name": "વિદ્યાર્થી",
+  "description": "ધોરણ ૯-૧૨ના વિદ્યાર્થીઓ માટે શૈક્ષણિક પ્લેટફોર્મ.",
+  "icons": [
+    {
+      "src": "/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#10b981",
+  "background_color": "#f8fafc",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait"
+}
