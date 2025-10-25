@@ -7,6 +7,7 @@ import { askDoubt } from '@/ai/flows/ask-doubt-flow';
 import { generateFlashcards, type GenerateFlashcardsOutput } from '@/ai/flows/generate-flashcards-flow';
 import { summarizeContent } from '@/ai/flows/summarize-content-flow';
 import { generateQuizFromImage, type GenerateQuizFromImageOutput } from '@/ai/flows/generate-quiz-from-image-flow';
+import { textToSpeech } from '@/ai/flows/text-to-speech-flow';
 import {type Message} from 'genkit';
 
 export type CreateQuizState = {
@@ -63,11 +64,21 @@ export async function chatAction(
   const newHistory = [...history, newUserMessage];
 
   try {
-    const response = await chat({
+    const responseText = await chat({
       history: newHistory,
       message: userInput,
     });
-    const modelResponse: Message = { role: 'model', content: [{text: response}]};
+
+    const audioDataUri = await textToSpeech(responseText);
+    
+    const modelResponse: Message = { 
+      role: 'model', 
+      content: [
+        {text: responseText},
+        ...(audioDataUri ? [{data: {uri: audioDataUri, contentType: 'audio/wav'}}] : [])
+      ]
+    };
+
     return {
       formKey: prevState.formKey + 1,
       messages: [...newHistory, modelResponse],

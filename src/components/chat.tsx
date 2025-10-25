@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { chatAction, type ChatState } from '@/app/actions';
-import { Loader2, Send, Bot, Copy, Check } from 'lucide-react';
+import { Loader2, Send, Bot, Copy, Check, Volume2 } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from './ui/card';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
@@ -28,28 +28,55 @@ function SubmitButton() {
   );
 }
 
-function CopyButton({ text }: { text: string }) {
+function MessageActions({ message }: { message: Message }) {
     const [isCopied, setIsCopied] = useState(false);
     const { toast } = useToast();
+    const audioRef = useRef<HTMLAudioElement>(null);
 
+    const messageText = message.content.map(part => part.text).join('');
+    const audioPart = message.content.find(part => part.data?.uri);
+    const audioUri = audioPart?.data?.uri;
+    
     const handleCopy = () => {
-        navigator.clipboard.writeText(text).then(() => {
+        navigator.clipboard.writeText(messageText).then(() => {
             setIsCopied(true);
             toast({ title: 'Message copied!', description: 'Response has been copied to clipboard.' });
             setTimeout(() => setIsCopied(false), 2000);
         });
     };
 
+    const handlePlayAudio = () => {
+        if (audioRef.current) {
+            audioRef.current.play();
+        }
+    };
+
     return (
-        <Button
-            onClick={handleCopy}
-            variant="ghost"
-            size="icon"
-            className="h-6 w-6 text-muted-foreground hover:bg-background/50 hover:text-foreground absolute top-1 right-1"
-        >
-            {isCopied ? <Check className="h-4 w-4 text-green-500" /> : <Copy className="h-4 w-4" />}
-            <span className="sr-only">Copy response</span>
-        </Button>
+        <div className="absolute top-1 right-1 flex items-center space-x-1">
+            {audioUri && (
+                <>
+                    <audio ref={audioRef} src={audioUri} className="hidden" />
+                    <Button
+                        onClick={handlePlayAudio}
+                        variant="ghost"
+                        size="icon"
+                        className="h-6 w-6 text-muted-foreground hover:bg-background/50 hover:text-foreground"
+                    >
+                        <Volume2 className="h-4 w-4" />
+                        <span className="sr-only">Play audio</span>
+                    </Button>
+                </>
+            )}
+            <Button
+                onClick={handleCopy}
+                variant="ghost"
+                size="icon"
+                className="h-6 w-6 text-muted-foreground hover:bg-background/50 hover:text-foreground"
+            >
+                {isCopied ? <Check className="h-4 w-4 text-green-500" /> : <Copy className="h-4 w-4" />}
+                <span className="sr-only">Copy response</span>
+            </Button>
+        </div>
     );
 }
 
@@ -59,6 +86,7 @@ export function Chat() {
   const inputRef = useRef<HTMLInputElement>(null);
   const viewportRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
+  const lastPlayedAudioIndex = useRef<number | null>(null);
 
   useEffect(() => {
     if (state.error) {
@@ -76,6 +104,21 @@ export function Chat() {
   useEffect(() => {
     if (viewportRef.current) {
         viewportRef.current.scrollTo({ top: viewportRef.current.scrollHeight, behavior: 'smooth' });
+    }
+    
+    // Auto-play audio for the latest model message
+    if (state.messages.length > 0) {
+        const lastMessage = state.messages[state.messages.length - 1];
+        const lastMessageIndex = state.messages.length - 1;
+
+        if (lastMessage.role === 'model' && lastPlayedAudioIndex.current !== lastMessageIndex) {
+            const audioPart = lastMessage.content.find(part => part.data?.uri);
+            if (audioPart?.data?.uri) {
+                const audio = new Audio(audioPart.data.uri);
+                audio.play().catch(e => console.error("Audio play failed:", e));
+                lastPlayedAudioIndex.current = lastMessageIndex;
+            }
+        }
     }
   }, [state.messages, isPending]);
 
@@ -103,10 +146,10 @@ export function Chat() {
                     : 'bg-muted max-w-[85%]'
                 )}
               >
-                <p className="whitespace-pre-wrap break-words pr-8">
+                <p className="whitespace-pre-wrap break-words pr-16">
                     {messageText}
                 </p>
-                {message.role === 'model' && <CopyButton text={messageText} />}
+                {message.role === 'model' && <MessageActions message={message} />}
               </div>
             )})}
              {isPending && (
