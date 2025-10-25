@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { chatAction, type ChatState } from '@/app/actions';
-import { Loader2, Send, Bot, Copy, Check, Volume2 } from 'lucide-react';
+import { Loader2, Send, Bot, Copy, Check, Volume2, StopCircle } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from './ui/card';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
@@ -30,6 +30,7 @@ function SubmitButton() {
 
 function MessageActions({ message }: { message: Message }) {
     const [isCopied, setIsCopied] = useState(false);
+    const [isPlaying, setIsPlaying] = useState(false);
     const { toast } = useToast();
     const audioRef = useRef<HTMLAudioElement>(null);
 
@@ -45,25 +46,44 @@ function MessageActions({ message }: { message: Message }) {
         });
     };
 
-    const handlePlayAudio = () => {
-        if (audioRef.current) {
+    const handleToggleAudio = () => {
+        if (!audioRef.current) return;
+
+        if (isPlaying) {
+            audioRef.current.pause();
+            audioRef.current.currentTime = 0; // Reset audio to the beginning
+            setIsPlaying(false);
+        } else {
             audioRef.current.play();
+            setIsPlaying(true);
         }
     };
+    
+    useEffect(() => {
+        const audio = audioRef.current;
+        if (audio) {
+            const onEnded = () => setIsPlaying(false);
+            audio.addEventListener('ended', onEnded);
+            return () => {
+                audio.removeEventListener('ended', onEnded);
+            };
+        }
+    }, []);
+
 
     return (
         <div className="absolute top-1 right-1 flex items-center space-x-1">
             {audioUri && (
                 <>
-                    <audio ref={audioRef} src={audioUri} className="hidden" />
+                    <audio ref={audioRef} src={audioUri} className="hidden" preload="auto" />
                     <Button
-                        onClick={handlePlayAudio}
+                        onClick={handleToggleAudio}
                         variant="ghost"
                         size="icon"
                         className="h-6 w-6 text-muted-foreground hover:bg-background/50 hover:text-foreground"
                     >
-                        <Volume2 className="h-4 w-4" />
-                        <span className="sr-only">Play audio</span>
+                        {isPlaying ? <StopCircle className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}
+                        <span className="sr-only">{isPlaying ? 'Stop audio' : 'Play audio'}</span>
                     </Button>
                 </>
             )}
@@ -86,8 +106,7 @@ export function Chat() {
   const inputRef = useRef<HTMLInputElement>(null);
   const viewportRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
-  const lastPlayedAudioIndex = useRef<number | null>(null);
-
+  
   useEffect(() => {
     if (state.error) {
         toast({ variant: 'destructive', title: 'Chat Error', description: state.error });
@@ -104,21 +123,6 @@ export function Chat() {
   useEffect(() => {
     if (viewportRef.current) {
         viewportRef.current.scrollTo({ top: viewportRef.current.scrollHeight, behavior: 'smooth' });
-    }
-    
-    // Auto-play audio for the latest model message
-    if (state.messages.length > 0) {
-        const lastMessage = state.messages[state.messages.length - 1];
-        const lastMessageIndex = state.messages.length - 1;
-
-        if (lastMessage.role === 'model' && lastPlayedAudioIndex.current !== lastMessageIndex) {
-            const audioPart = lastMessage.content.find(part => part.data?.uri);
-            if (audioPart?.data?.uri) {
-                const audio = new Audio(audioPart.data.uri);
-                audio.play().catch(e => console.error("Audio play failed:", e));
-                lastPlayedAudioIndex.current = lastMessageIndex;
-            }
-        }
     }
   }, [state.messages, isPending]);
 
