@@ -23,7 +23,7 @@ function SubmitButton() {
   return (
     <Button type="submit" size="icon" disabled={pending}>
       {pending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
-      <span className="sr-only">સંદેશ મોકલો</span>
+      <span className="sr-only">Send Message</span>
     </Button>
   );
 }
@@ -35,7 +35,7 @@ function CopyButton({ text }: { text: string }) {
     const handleCopy = () => {
         navigator.clipboard.writeText(text).then(() => {
             setIsCopied(true);
-            toast({ title: 'Message copied!', description: 'જવાબ ક્લિપબોર્ડ પર કૉપિ કરવામાં આવ્યો છે.' });
+            toast({ title: 'Message copied!', description: 'Response has been copied to clipboard.' });
             setTimeout(() => setIsCopied(false), 2000);
         });
     };
@@ -48,7 +48,7 @@ function CopyButton({ text }: { text: string }) {
             className="h-6 w-6 text-muted-foreground hover:bg-background/50 hover:text-foreground absolute top-1 right-1"
         >
             {isCopied ? <Check className="h-4 w-4 text-green-500" /> : <Copy className="h-4 w-4" />}
-            <span className="sr-only">જવાબ કૉપિ કરો</span>
+            <span className="sr-only">Copy response</span>
         </Button>
     );
 }
@@ -80,13 +80,13 @@ export function Chat() {
   }, [state.messages]);
 
   return (
-    <Card className="w-full max-w-lg mx-auto">
+    <Card className="w-full max-w-lg mx-auto bg-card/80 backdrop-blur-sm">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Bot />
-          વિદ્યાર્થી મિત્ર
+          Tutor AI
         </CardTitle>
-        <CardDescription>તમારા અભ્યાસમાં મદદ માટે અહીં પૂછો.</CardDescription>
+        <CardDescription>Ask me anything about your studies.</CardDescription>
       </CardHeader>
       <CardContent>
         <ScrollArea className="h-96 w-full pr-4" ref={scrollAreaRef}>
@@ -128,7 +128,7 @@ export function Chat() {
             <input key={i} type="hidden" name={`history_${i}_role`} value={msg.role} />
           ))}
           <input type="hidden" name="history" value={JSON.stringify(state.messages)} />
-          <Input name="message" ref={inputRef} placeholder="તમારો પ્રશ્ન લખો..." className="flex-1" autoComplete="off" />
+          <Input name="message" ref={inputRef} placeholder="Type your question..." className="flex-1" autoComplete="off" />
           <SubmitButton />
         </form>
       </CardFooter>

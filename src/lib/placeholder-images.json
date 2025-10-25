@@ -1,27 +1,33 @@
 {
   "placeholderImages": [
     {
+      "id": "xora-hero",
+      "description": "Abstract 3D blocks with neon glows, representing AI.",
+      "imageUrl": "https://storage.googleapis.com/gemini-studio-dev.appspot.com/image-e87f58a7-53c2-48f8-a725-b4614a896d11.png",
+      "imageHint": "AI abstract blocks"
+    },
+    {
       "id": "placeholder-math",
       "description": "An abstract image representing mathematics, with numbers and geometric shapes.",
-      "imageUrl": "https://picsum.photos/seed/math/1200/800",
+      "imageUrl": "https://images.unsplash.com/photo-1626438426506-73712ed296b4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxtYXRoZW1hdGljcyUyMGFic3RyYWN0fGVufDB8fHx8MTc2MTM5NjYzNnww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "mathematics abstract"
     },
     {
       "id": "placeholder-science",
       "description": "An image representing science, perhaps with beakers or a microscope.",
-      "imageUrl": "https://picsum.photos/seed/science/1200/800",
+      "imageUrl": "https://images.unsplash.com/photo-1668511237388-404cc7e56e9d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8c2NpZW5jZSUyMGxhYm9yYXRvcnl8ZW58MHx8fHwxNzYxMzk2MTY3fDA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "science laboratory"
     },
     {
       "id": "hero-image",
       "description": "A vibrant image of students learning or a library.",
-      "imageUrl": "https://picsum.photos/seed/library/1600/900",
+      "imageUrl": "https://images.unsplash.com/photo-1752920299210-0b727800ea50?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxzdHVkZW50cyUyMGxpYnJhcnl8ZW58MHx8fHwxNzYxMjk4ODc4fDA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "students library"
     },
     {
       "id": "app-background",
       "description": "A subtle, abstract background pattern.",
-      "imageUrl": "https://picsum.photos/seed/appbg/1920/1080",
+      "imageUrl": "https://images.unsplash.com/photo-1482053450283-3e0b78b09a70?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8YWJzdHJhY3QlMjBwYXR0ZXJufGVufDB8fHx8MTc2MTM3NTg1Mnww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "abstract pattern"
     }
   ]
