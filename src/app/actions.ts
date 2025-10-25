@@ -9,6 +9,41 @@ import { summarizeContent } from '@/ai/flows/summarize-content-flow';
 import { generateQuizFromImage, type GenerateQuizFromImageOutput } from '@/ai/flows/generate-quiz-from-image-flow';
 import { textToSpeech } from '@/ai/flows/text-to-speech-flow';
 import {type Message} from 'genkit';
+import guTranslations from '@/lib/i18n/gu.json';
+import enTranslations from '@/lib/i18n/en.json';
+
+const translations = {
+  gu: guTranslations,
+  en: enTranslations,
+};
+
+// A helper function to get translations on the server
+function getT(lang: 'gu' | 'en' = 'gu') {
+    return function t(key: string, params?: Record<string, string | number>): string {
+        const keys = key.split('.');
+        let result: any = translations[lang];
+        for (const k of keys) {
+            result = result?.[k];
+            if (result === undefined) {
+                 let fallbackResult: any = translations.en;
+                 for (const fk of keys) {
+                     fallbackResult = fallbackResult?.[fk];
+                 }
+                 if(fallbackResult === undefined) return key;
+                 result = fallbackResult;
+            }
+        }
+
+        if (typeof result === 'string' && params) {
+            return Object.entries(params).reduce((acc, [key, value]) => {
+                return acc.replace(`{${key}}`, String(value));
+            }, result);
+        }
+        
+        return result || key;
+    }
+}
+
 
 export type CreateQuizState = {
   formKey: number;
@@ -21,9 +56,10 @@ export async function createQuizAction(
   prevState: CreateQuizState,
   formData: FormData
 ): Promise<CreateQuizState> {
+  const t = getT(formData.get('language') as 'gu' | 'en');
   const grade = formData.get('gradeLevel');
   if (grade !== '9' && grade !== '10' && grade !== '11' && grade !== '12') {
-    return { ...prevState, success: false, message: 'અમાન્ય ધોરણ સ્તર.' };
+    return { ...prevState, success: false, message: t('errors.invalidGrade') };
   }
 
   const subject = formData.get('subjectName') as string;
@@ -36,11 +72,11 @@ export async function createQuizAction(
       chapter: chapter,
       numberOfQuestions: 15,
     });
-    return { formKey: prevState.formKey + 1, success: true, message: 'ક્વિઝ સફળતાપૂર્વક બનાવવામાં આવી!', data: quizData };
+    return { formKey: prevState.formKey + 1, success: true, message: t('quizGenerator.success'), data: quizData };
   } catch (error) {
     console.error(error);
-    const message = error instanceof Error ? error.message : 'એક અજ્ઞાત ભૂલ આવી.';
-    return { ...prevState, success: false, message: `ક્વિઝ બનાવવામાં નિષ્ફળ: ${message}` };
+    const message = error instanceof Error ? error.message : t('errors.unknown');
+    return { ...prevState, success: false, message: t('errors.quizCreationFailed', { message }) };
   }
 }
 
@@ -54,9 +90,10 @@ export async function chatAction(
   prevState: ChatState,
   formData: FormData
 ): Promise<ChatState> {
+  const t = getT(formData.get('language') as 'gu' | 'en');
   const userInput = formData.get('message') as string;
   if (!userInput) {
-    return { ...prevState, error: 'Message is required' };
+    return { ...prevState, error: t('errors.messageRequired') };
   }
 
   const history = prevState.messages || [];
@@ -85,11 +122,11 @@ export async function chatAction(
     };
   } catch (error) {
     console.error(error);
-    const message = error instanceof Error ? error.message : 'An unknown error occurred.';
+    const message = error instanceof Error ? error.message : t('errors.unknown');
     return {
       ...prevState,
-      messages: newHistory, // Keep history up to the user's message
-      error: `Failed to get response: ${message}`,
+      messages: newHistory,
+      error: t('errors.responseFailed', { message }),
     };
   }
 }
@@ -105,11 +142,12 @@ export async function askDoubtAction(
   prevState: AskDoubtState,
   formData: FormData
 ): Promise<AskDoubtState> {
+  const t = getT(formData.get('language') as 'gu' | 'en');
   const question = formData.get('question') as string;
   const chapterContent = formData.get('chapterContent') as string;
 
   if (!question) {
-    return { ...prevState, error: 'પ્રશ્ન જરૂરી છે.', answer: null };
+    return { ...prevState, error: t('errors.questionRequired'), answer: null };
   }
 
   try {
@@ -120,8 +158,8 @@ export async function askDoubtAction(
     return { formKey: prevState.formKey + 1, question, answer: response };
   } catch (error) {
     console.error(error);
-    const message = error instanceof Error ? error.message : 'An unknown error occurred.';
-    return { ...prevState, question, error: `જવાબ મેળવવામાં નિષ્ફળ: ${message}`, answer: null };
+    const message = error instanceof Error ? error.message : t('errors.unknown');
+    return { ...prevState, question, error: t('errors.answerFailed', { message }), answer: null };
   }
 }
 
@@ -132,10 +170,12 @@ export type CreateFlashcardsState = {
 };
 
 export async function createFlashcardsAction(
-  chapterContent: string
+  chapterContent: string,
+  lang: 'gu' | 'en' = 'gu'
 ): Promise<CreateFlashcardsState> {
+  const t = getT(lang);
   if (!chapterContent) {
-    return { success: false, message: 'પ્રકરણ સામગ્રી ખૂટે છે.', data: null };
+    return { success: false, message: t('errors.contentMissing'), data: null };
   }
 
   try {
@@ -146,8 +186,8 @@ export async function createFlashcardsAction(
     return { success: true, message: 'ફ્લેશકાર્ડ્સ સફળતાપૂર્વક બનાવવામાં આવ્યા!', data: flashcardData };
   } catch (error) {
     console.error(error);
-    const message = error instanceof Error ? error.message : 'એક અજ્ઞાત ભૂલ આવી.';
-    return { success: false, message: `ફ્લેશકાર્ડ્સ બનાવવામાં નિષ્ફળ: ${message}`, data: null };
+    const message = error instanceof Error ? error.message : t('errors.unknown');
+    return { success: false, message: t('errors.flashcardCreationFailed', { message }), data: null };
   }
 }
 
@@ -158,10 +198,12 @@ export type SummarizeContentState = {
 };
 
 export async function summarizeContentAction(
-  chapterContent: string
+  chapterContent: string,
+  lang: 'gu' | 'en' = 'gu'
 ): Promise<SummarizeContentState> {
+  const t = getT(lang);
   if (!chapterContent) {
-    return { summary: null, error: 'પ્રકરણ સામગ્રી ખૂટે છે.' };
+    return { summary: null, error: t('errors.contentMissing') };
   }
 
   try {
@@ -171,8 +213,8 @@ export async function summarizeContentAction(
     return { summary: response };
   } catch (error) {
     console.error(error);
-    const message = error instanceof Error ? error.message : 'એક અજ્ઞાત ભૂલ આવી.';
-    return { summary: null, error: `સારાંશ બનાવવામાં નિષ્ફળ: ${message}` };
+    const message = error instanceof Error ? error.message : t('errors.unknown');
+    return { summary: null, error: t('errors.summaryCreationFailed', { message }) };
   }
 }
 
@@ -187,20 +229,21 @@ export async function createQuizFromImageAction(
     prevState: CreateQuizFromImageState,
     formData: FormData
 ): Promise<CreateQuizFromImageState> {
+    const t = getT(formData.get('language') as 'gu' | 'en');
     const imageDataUri = formData.get('imageDataUri') as string;
 
     if (!imageDataUri) {
-        return { ...prevState, success: false, message: 'કૃપા કરીને એક છબી અપલોડ કરો.' };
+        return { ...prevState, success: false, message: t('errors.imageRequired') };
     }
 
     try {
         const quizData = await generateQuizFromImage({
             imageDataUri: imageDataUri,
         });
-        return { formKey: prevState.formKey + 1, success: true, message: 'છબીમાંથી ક્વિઝ સફળતાપૂર્વક બનાવવામાં આવી!', data: quizData };
+        return { formKey: prevState.formKey + 1, success: true, message: t('imageQuizGenerator.quizReady'), data: quizData };
     } catch (error) {
         console.error(error);
-        const message = error instanceof Error ? error.message : 'એક અજ્ઞાત ભૂલ આવી.';
-        return { ...prevState, success: false, message: `ક્વિઝ બનાવવામાં નિષ્ફળ: ${message}` };
+        const message = error instanceof Error ? error.message : t('errors.unknown');
+        return { ...prevState, success: false, message: t('errors.imageQuizFailed', { message }) };
     }
 }

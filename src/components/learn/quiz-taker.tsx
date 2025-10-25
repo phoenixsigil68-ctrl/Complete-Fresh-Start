@@ -10,6 +10,7 @@ import { Progress } from '@/components/ui/progress';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { CheckCircle, XCircle, Percent, History, RefreshCw } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { useTranslation } from '@/context/language-context';
 
 export function QuizTaker({ initialQuestions, chapterId }: { initialQuestions: QuizQuestion[]; chapterId: string }) {
   const [questions] = useState(initialQuestions);
@@ -20,6 +21,7 @@ export function QuizTaker({ initialQuestions, chapterId }: { initialQuestions: Q
   const [lastScore, setLastScore] = useState<number | null>(null);
 
   const { toast } = useToast();
+  const { t } = useTranslation();
   const storageKey = `quiz_progress_${chapterId}`;
 
   useEffect(() => {
@@ -49,8 +51,8 @@ export function QuizTaker({ initialQuestions, chapterId }: { initialQuestions: Q
     setIsSubmitted(true);
     localStorage.setItem(storageKey, JSON.stringify(finalScore));
     toast({
-      title: 'ક્વિઝ પૂર્ણ!',
-      description: `તમારો સ્કોર: ${finalScore}%`,
+      title: t('quizTaker.quizComplete'),
+      description: t('quizTaker.score').replace('{score}', String(finalScore)),
     });
   };
 
@@ -67,7 +69,7 @@ export function QuizTaker({ initialQuestions, chapterId }: { initialQuestions: Q
       <Card>
         <CardHeader className="text-center items-center">
           <Percent className="mx-auto h-12 w-12 text-accent" />
-          <CardTitle className="text-2xl font-bold">પરિણામ</CardTitle>
+          <CardTitle className="text-2xl font-bold">{t('quizTaker.result')}</CardTitle>
           <p className="text-4xl font-bold text-primary">{score}%</p>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -105,7 +107,7 @@ export function QuizTaker({ initialQuestions, chapterId }: { initialQuestions: Q
         <CardFooter className="flex justify-center">
           <Button onClick={resetQuiz}>
             <RefreshCw className="mr-2 h-4 w-4" />
-            ફરીથી પ્રયાસ કરો
+            {t('quizTaker.tryAgain')}
           </Button>
         </CardFooter>
       </Card>
@@ -120,14 +122,14 @@ export function QuizTaker({ initialQuestions, chapterId }: { initialQuestions: Q
       {lastScore !== null && (
         <Alert variant="default" className="m-4 border-accent">
           <History className="h-4 w-4" />
-          <AlertTitle>ગત પ્રયાસ</AlertTitle>
-          <AlertDescription>તમારો છેલ્લો સ્કોર {lastScore}% હતો.</AlertDescription>
+          <AlertTitle>{t('quizTaker.lastAttempt')}</AlertTitle>
+          <AlertDescription>{t('quizTaker.lastScore').replace('{score}', String(lastScore))}</AlertDescription>
         </Alert>
       )}
       <CardHeader>
         <Progress value={progress} className="w-full" />
         <p className="text-sm text-muted-foreground mt-2 text-center">
-          પ્રશ્ન {currentQuestionIndex + 1} / {questions.length}
+          {t('quizTaker.questionProgress').replace('{current}', String(currentQuestionIndex + 1)).replace('{total}', String(questions.length))}
         </p>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -145,15 +147,15 @@ export function QuizTaker({ initialQuestions, chapterId }: { initialQuestions: Q
       </CardContent>
       <CardFooter className="flex justify-between">
         <Button variant="outline" onClick={() => setCurrentQuestionIndex(prev => prev - 1)} disabled={currentQuestionIndex === 0}>
-          પહેલાનો
+          {t('quizTaker.previous')}
         </Button>
         {currentQuestionIndex === questions.length - 1 ? (
           <Button onClick={handleSubmit} disabled={userAnswers[currentQuestionIndex] === -1}>
-            ક્વિઝ પૂર્ણ કરો
+            {t('quizTaker.finish')}
           </Button>
         ) : (
           <Button onClick={() => setCurrentQuestionIndex(prev => prev + 1)} disabled={userAnswers[currentQuestionIndex] === -1}>
-            આગળ
+            {t('quizTaker.next')}
           </Button>
         )}
       </CardFooter>

@@ -12,6 +12,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Label } from '../ui/label';
 import { RadioGroup, RadioGroupItem } from '../ui/radio-group';
+import { useTranslation } from '@/context/language-context';
 
 const initialState: CreateQuizFromImageState = {
   formKey: 0,
@@ -22,10 +23,11 @@ const initialState: CreateQuizFromImageState = {
 
 function SubmitButton({ disabled }: { disabled: boolean }) {
   const { pending } = useFormStatus();
+  const { t } = useTranslation();
   return (
     <Button type="submit" disabled={pending || disabled} size="lg" className="w-full md:w-auto">
       <Sparkles className="mr-2 h-4 w-4" />
-      {pending ? 'ક્વિઝ બનાવી રહ્યું છે...' : 'ક્વિઝ બનાવો'}
+      {pending ? t('imageQuizGenerator.creating') : t('imageQuizGenerator.createButton')}
     </Button>
   );
 }
@@ -36,19 +38,21 @@ export function ImageQuizGenerator() {
   const [imageDataUri, setImageDataUri] = useState<string>('');
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (state.message && !isPending) {
       toast({
         variant: state.success ? 'default' : 'destructive',
-        title: state.success ? 'સફળતા' : 'ભૂલ',
+        title: state.success ? t('quizGenerator.success') : t('quizGenerator.error'),
         description: state.message,
       });
     }
      if (state.success) {
       handleRemoveImage();
     }
-  }, [state.formKey, state.message, state.success, isPending, toast]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state.formKey, state.message, state.success, isPending, toast, t]);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -56,8 +60,8 @@ export function ImageQuizGenerator() {
       if (file.size > 4 * 1024 * 1024) { // 4MB limit
         toast({
             variant: 'destructive',
-            title: 'ફાઇલ ખૂબ મોટી છે',
-            description: 'કૃપા કરીને 4MB કરતા નાની છબી અપલોડ કરો.',
+            title: t('imageQuizGenerator.fileTooLarge'),
+            description: t('imageQuizGenerator.fileSizeHint'),
         });
         return;
       }
@@ -86,9 +90,9 @@ export function ImageQuizGenerator() {
         <form action={formAction}>
             <input type="hidden" name="imageDataUri" value={imageDataUri} />
             <CardHeader>
-            <CardTitle>૧. છબી અપલોડ કરો</CardTitle>
+            <CardTitle>{t('imageQuizGenerator.uploadTitle')}</CardTitle>
             <CardDescription>
-                તમારા પાઠ્યપુસ્તક, નોંધો, અથવા કોઈપણ લખાણવાળા પૃષ્ઠની સ્પષ્ટ છબી પસંદ કરો.
+                {t('imageQuizGenerator.uploadDescription')}
             </CardDescription>
             </CardHeader>
             <CardContent>
@@ -114,9 +118,9 @@ export function ImageQuizGenerator() {
                         <div className="flex flex-col items-center justify-center pt-5 pb-6">
                         <UploadCloud className="w-10 h-10 mb-3 text-muted-foreground" />
                         <p className="mb-2 text-sm text-center text-muted-foreground">
-                            <span className="font-semibold">અપલોડ કરવા માટે ક્લિક કરો</span> અથવા છબીને અહીં ખેંચીને મૂકો
+                            <span className="font-semibold">{t('imageQuizGenerator.uploadLabel')}</span> {t('imageQuizGenerator.uploadHint')}
                         </p>
-                        <p className="text-xs text-muted-foreground">PNG, JPG, JPEG (મહત્તમ 4MB)</p>
+                        <p className="text-xs text-muted-foreground">{t('imageQuizGenerator.uploadValidation')}</p>
                         </div>
                     )}
                     <Input 
@@ -140,17 +144,17 @@ export function ImageQuizGenerator() {
       {(isPending || state.data) && (
         <Card className="lg:col-span-2 bg-secondary/50">
             <CardHeader>
-            <CardTitle>૨. પરિણામ</CardTitle>
+            <CardTitle>{t('imageQuizGenerator.resultTitle')}</CardTitle>
             <CardDescription>
-                તમારી ક્વિઝ અહીં દેખાશે.
+                {t('imageQuizGenerator.resultDescription')}
             </CardDescription>
             </CardHeader>
             <CardContent>
             {isPending && (
                 <div className="flex flex-col items-center justify-center h-full text-muted-foreground p-8">
                     <Loader2 className="h-12 w-12 animate-spin mb-4 text-primary" />
-                    <p className="text-lg font-semibold">AI તમારી ક્વિઝ બનાવી રહ્યું છે...</p>
-                    <p>આમાં થોડો સમય લાગી શકે છે, કૃપા કરીને ધીરજ રાખો.</p>
+                    <p className="text-lg font-semibold">{t('imageQuizGenerator.generating')}</p>
+                    <p>{t('imageQuizGenerator.generatingHint')}</p>
                 </div>
             )}
 
@@ -158,8 +162,8 @@ export function ImageQuizGenerator() {
                 <div className="space-y-6">
                 <Alert>
                     <Lightbulb className="h-4 w-4" />
-                    <AlertTitle>ક્વિઝ તૈયાર છે!</AlertTitle>
-                    <AlertDescription>AI દ્વારા બનાવેલ નવા પ્રશ્નો નીચે મુજબ છે.</AlertDescription>
+                    <AlertTitle>{t('imageQuizGenerator.quizReady')}</AlertTitle>
+                    <AlertDescription>{t('imageQuizGenerator.quizReadyDescription')}</AlertDescription>
                 </Alert>
                 <div className="max-h-[70vh] overflow-y-auto pr-2 space-y-4 -mr-4">
                 {state.data.questions.map((q, index) => (
@@ -194,7 +198,7 @@ export function ImageQuizGenerator() {
             {!isPending && state.message && !state.success && (
                     <Alert variant="destructive">
                         <AlertCircle className="h-4 w-4" />
-                        <AlertTitle>એક ભૂલ આવી</AlertTitle>
+                        <AlertTitle>{t('imageQuizGenerator.errorOccurred')}</AlertTitle>
                         <AlertDescription>{state.message}</AlertDescription>
                     </Alert>
             )}

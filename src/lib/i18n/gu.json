@@ -1,0 +1,168 @@
+{
+    "home": {
+        "title": "વિદ્યાર્થી સહાયક",
+        "subtitle": "તમારા અભ્યાસ માટે AI-સંચાલિત માર્ગદર્શક",
+        "selectionCard": {
+            "title": "ચાલો શરૂ કરીએ!",
+            "description": "તમારું ધોરણ, વિષય અને પ્રકરણ પસંદ કરો."
+        },
+        "imageQuizCard": {
+            "title": "છબીમાંથી ક્વિઝ બનાવો",
+            "description": "પાઠ્યપુસ્તકના પૃષ્ઠની છબી અપલોડ કરીને ક્વિઝ બનાવો.",
+            "button": "અહીં ક્લિક કરો"
+        },
+        "dailyProgress": {
+            "title": "આજનો અભ્યાસ",
+            "minutes": "મિનિટ",
+            "goalComplete": "ખૂબ સરસ! આજનો લક્ષ્યાંક પૂરો થયો.",
+            "goalProgress": "તમે તમારા દૈનિક લક્ષ્યના {percentage}% પર છો."
+        }
+    },
+    "selectionForm": {
+        "selectGrade": "ધોરણ પસંદ કરો",
+        "selectSubject": "વિષય પસંદ કરો",
+        "selectChapter": "પ્રકરણ પસંદ કરો",
+        "startButton": "અભ્યાસ શરૂ કરો"
+    },
+    "learn": {
+        "mainPage": "મુખ્ય પૃષ્ઠ",
+        "contentTab": "અભ્યાસક્રમ",
+        "flashcardsTab": "ફ્લેશકાર્ડ્સ",
+        "quizTab": "ક્વિઝ"
+    },
+    "contentDisplay": {
+        "textbook": "પાઠ્યપુસ્તક",
+        "textbookDescription": "સંપૂર્ણ પ્રકરણ વાંચવા માટે સત્તાવાર પાઠ્યપુસ્તક ખોલો.",
+        "openTextbook": "પાઠ્યપુસ્તક ખોલો",
+        "videoLecture": "વિડિઓ લેક્ચર",
+        "videoLectureDescription": "આ પ્રકરણને લગતા વિડિઓ લેક્ચર્સ શોધવા માટે YouTube પર જાઓ.",
+        "searchOnYouTube": "YouTube પર શોધો"
+    },
+    "summarizer": {
+        "title": "AI સારાંશ",
+        "description": "આખા પ્રકરણનો મુખ્ય સારાંશ મેળવવા માટે નીચેનું બટન દબાવો.",
+        "button": "સારાંશ બનાવો",
+        "loading": "તૈયાર કરી રહ્યું છે...",
+        "errorTitle": "ઓહ ના!",
+        "generating": "AI તમારા માટે સારાંશ તૈયાર કરી રહ્યું છે..."
+    },
+    "askDoubt": {
+        "title": "શંકા પૂછો",
+        "description": "આ પ્રકરણ વિશે કોઈ પ્રશ્ન છે? અહીં પૂછો અને તરત જ AI-સંચાલિત જવાબ મેળવો.",
+        "placeholder": "ઉદાહરણ: 'સંમેય અને અસંમેય સંખ્યાઓ વચ્ચે શું તફાવત છે?'",
+        "button": "પ્રશ્ન પૂછો",
+        "loading": "પૂછી રહ્યું છે...",
+        "generating": "AI જવાબ તૈયાર કરી રહ્યું છે..."
+    },
+    "flashcardView": {
+        "title": "AI ફ્લેશકાર્ડ જનરેટર",
+        "description": "આ પ્રકરણના મુખ્ય મુદ્દાઓમાંથી ઝડપથી શીખવા અને યાદ રાખવા માટે AI નો ઉપયોગ કરીને ફ્લેશકાર્ડ્સ બનાવો.",
+        "createButton": "ફ્લેશકાર્ડ્સ બનાવો",
+        "creating": "બનાવી રહ્યું છે...",
+        "generating": "AI તમારા માટે ફ્લેશકાર્ડ્સ તૈયાર કરી રહ્યું છે...",
+        "createNew": "નવા ફ્લેશકાર્ડ્સ બનાવો",
+        "creatingNew": "ફરીથી બનાવી રહ્યું છે...",
+        "errorTitle": "ભૂલ",
+        "initialPrompt": "ફ્લેશકાર્ડ્સ બનાવવા માટે બટન પર ક્લિક કરો."
+    },
+    "quiz": {
+        "selfAssessmentTitle": "સ્વ-મૂલ્યાંકન ક્વિઝ",
+        "selfAssessmentDescription": "તમારી સમજ ચકાસવા માટે આ ક્વિઝ આપો.",
+        "noQuizAvailable": "આ પ્રકરણ માટે હજી સુધી કોઈ ક્વિઝ ઉપલબ્ધ નથી. કૃપા કરીને એક નવી બનાવો.",
+        "aiGeneratorTitle": "AI ક્વિઝ જનરેટર",
+        "aiGeneratorDescription": "આ પ્રકરણ માટે નવા પ્રશ્નો બનાવવા માટે AI નો ઉપયોગ કરો.",
+        "fromImageTitle": "છબીમાંથી ક્વિઝ બનાવો",
+        "fromImageDescription": "પાઠ્યપુસ્તકના પૃષ્ઠની છબી અપલોડ કરીને ક્વિઝ બનાવો.",
+        "fromImageButton": "અહીં ક્લિક કરો"
+    },
+    "quizGenerator": {
+        "button": "નવી ક્વિઝ બનાવો",
+        "loading": "બનાવી રહ્યું છે...",
+        "success": "સફળતા",
+        "error": "ભૂલ",
+        "newQuestionsTitle": "નવા પ્રશ્નો",
+        "newQuestionsDescription": "AI દ્વારા બનાવેલ નવા પ્રશ્નો નીચે મુજબ છે."
+    },
+    "quizTaker": {
+        "result": "પરિણામ",
+        "score": "તમારો સ્કોર: {score}%",
+        "quizComplete": "ક્વિઝ પૂર્ણ!",
+        "tryAgain": "ફરીથી પ્રયાસ કરો",
+        "lastAttempt": "ગત પ્રયાસ",
+        "lastScore": "તમારો છેલ્લો સ્કોર {score}% હતો.",
+        "questionProgress": "પ્રશ્ન {current} / {total}",
+        "previous": "પહેલાનો",
+        "next": "આગળ",
+        "finish": "ક્વિઝ પૂર્ણ કરો"
+    },
+    "imageQuizGenerator": {
+        "title": "છબીમાંથી ક્વિઝ બનાવો",
+        "subtitle": "તમારા પાઠ્યપુસ્તકના પૃષ્ઠની છબી અપલોડ કરો અને AI ને તમારા માટે ક્વિઝ બનાવવા દો.",
+        "uploadTitle": "૧. છબી અપલોડ કરો",
+        "uploadDescription": "તમારા પાઠ્યપુસ્તક, નોંધો, અથવા કોઈપણ લખાણવાળા પૃષ્ઠની સ્પષ્ટ છબી પસંદ કરો.",
+        "uploadLabel": "અપલોડ કરવા માટે ક્લિક કરો",
+        "uploadHint": "અથવા છબીને અહીં ખેંચીને મૂકો",
+        "uploadValidation": "PNG, JPG, JPEG (મહત્તમ 4MB)",
+        "fileTooLarge": "ફાઇલ ખૂબ મોટી છે",
+        "fileSizeHint": "કૃપા કરીને 4MB કરતા નાની છબી અપલોડ કરો.",
+        "createButton": "ક્વિઝ બનાવો",
+        "creating": "ક્વિઝ બનાવી રહ્યું છે...",
+        "resultTitle": "૨. પરિણામ",
+        "resultDescription": "તમારી ક્વિઝ અહીં દેખાશે.",
+        "generating": "AI તમારી ક્વિઝ બનાવી રહ્યું છે...",
+        "generatingHint": "આમાં થોડો સમય લાગી શકે છે, કૃપા કરીને ધીરજ રાખો.",
+        "quizReady": "ક્વિઝ તૈયાર છે!",
+        "quizReadyDescription": "AI દ્વારા બનાવેલ નવા પ્રશ્નો નીચે મુજબ છે.",
+        "errorOccurred": "એક ભૂલ આવી"
+    },
+    "chat": {
+        "title": "ચેટ કરો",
+        "subtitle": "તમારા મિત્ર, વિદ્યાર્થી મિત્ર સાથે વાત કરો.",
+        "botName": "વિદ્યાર્થી મિત્ર",
+        "botGreeting": "તમારા અભ્યાસ વિશે મને કંઈપણ પૂછો.",
+        "inputPlaceholder": "તમારો પ્રશ્ન લખો...",
+        "sendMessage": "Send Message",
+        "messageCopied": "Message copied!",
+        "copyDescription": "Response has been copied to clipboard.",
+        "playAudio": "Play audio",
+        "stopAudio": "Stop audio",
+        "copyResponse": "Copy response",
+        "chatError": "Chat Error"
+    },
+    "errors": {
+        "invalidGrade": "અમાન્ય ધોરણ સ્તર.",
+        "unknown": "એક અજ્ઞાત ભૂલ આવી.",
+        "quizCreationFailed": "ક્વિઝ બનાવવામાં નિષ્ફળ: {message}",
+        "messageRequired": "Message is required",
+        "responseFailed": "Failed to get response: {message}",
+        "questionRequired": "પ્રશ્ન જરૂરી છે.",
+        "answerFailed": "જવાબ મેળવવામાં નિષ્ફળ: {message}",
+        "contentMissing": "પ્રકરણ સામગ્રી ખૂટે છે.",
+        "flashcardCreationFailed": "ફ્લેશકાર્ડ્સ બનાવવામાં નિષ્ફળ: {message}",
+        "summaryCreationFailed": "સારાંશ બનાવવામાં નિષ્ફળ: {message}",
+        "imageQuizFailed": "ક્વિઝ બનાવવામાં નિષ્ફળ: {message}",
+        "imageRequired": "કૃપા કરીને એક છબી અપલોડ કરો."
+    },
+    "quotes": [
+        {
+            "text": "શિક્ષણ એ સૌથી શક્તિશાળી શસ્ત્ર છે જેનો ઉપયોગ તમે વિશ્વને બદલવા માટે કરી શકો છો.",
+            "author": "નેલ્સન મંડેલા"
+        },
+        {
+            "text": "એકમાત્ર વાસ્તવિક જ્ઞાન એ છે કે તમે કશું જાણતા નથી.",
+            "author": "સોક્રેટીસ"
+        },
+        {
+            "text": "જીવતા રહો જાણે કાલે મરવાનું હોય. શીખો જાણે હંમેશા જીવવાનું હોય.",
+            "author": "મહાત્મા ગાંધી"
+        },
+        {
+            "text": "ભવિષ્યની આગાહી કરવાનો શ્રેષ્ઠ માર્ગ તેને બનાવવાનો છે.",
+            "author": "પીટર ડ્રકર"
+        },
+        {
+            "text": "સફળતા અંતિમ નથી, નિષ્ફળતા ઘાતક નથી: તે ચાલુ રાખવાની હિંમત છે જે ગણાય છે.",
+            "author": "વિન્સ્ટન ચર્ચિલ"
+        }
+    ]
+}

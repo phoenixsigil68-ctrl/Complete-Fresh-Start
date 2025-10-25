@@ -1,3 +1,5 @@
+'use client';
+
 import { AppData } from '@/lib/data';
 import { notFound } from 'next/navigation';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -8,9 +10,12 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { FlashcardView } from '@/components/learn/flashcard-view';
 import { LearningTracker } from '@/hooks/use-learning-tracker';
+import { useTranslation } from '@/context/language-context';
+import { LanguageToggle } from '@/components/language-toggle';
 
 export default function LearnPage({ params }: { params: { slug: string[] } }) {
   const [gradeId, subjectId, chapterId] = params.slug;
+  const { t } = useTranslation();
 
   const grade = AppData.find(g => g.id === gradeId);
   const subject = grade?.subjects.find(s => s.id === subjectId);
@@ -31,19 +36,22 @@ export default function LearnPage({ params }: { params: { slug: string[] } }) {
             </p>
             <h1 className="text-2xl md:text-3xl font-bold font-headline text-primary">{chapter.name}</h1>
           </div>
-          <Button asChild variant="outline">
-            <Link href="/">
-              <Home className="mr-2 h-4 w-4" />
-              મુખ્ય પૃષ્ઠ
-            </Link>
-          </Button>
+          <div className="flex items-center gap-4">
+            <LanguageToggle />
+            <Button asChild variant="outline">
+              <Link href="/">
+                <Home className="mr-2 h-4 w-4" />
+                {t('learn.mainPage')}
+              </Link>
+            </Button>
+          </div>
         </header>
 
         <Tabs defaultValue="content" className="w-full">
           <TabsList className="grid w-full grid-cols-1 md:grid-cols-3 md:w-fit mx-auto md:mx-0 bg-card/80 backdrop-blur-sm border shadow-md">
-            <TabsTrigger value="content">અભ્યાસક્રમ</TabsTrigger>
-            <TabsTrigger value="flashcards">ફ્લેશકાર્ડ્સ</TabsTrigger>
-            <TabsTrigger value="quiz">ક્વિઝ</TabsTrigger>
+            <TabsTrigger value="content">{t('learn.contentTab')}</TabsTrigger>
+            <TabsTrigger value="flashcards">{t('learn.flashcardsTab')}</TabsTrigger>
+            <TabsTrigger value="quiz">{t('learn.quizTab')}</TabsTrigger>
           </TabsList>
           <TabsContent value="content" className="mt-4">
             <ContentDisplay chapter={chapter} grade={grade} subject={subject} />

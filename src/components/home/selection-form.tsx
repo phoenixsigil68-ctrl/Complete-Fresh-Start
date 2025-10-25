@@ -7,9 +7,11 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { AppData } from '@/lib/data';
 import type { Subject, Chapter } from '@/lib/types';
 import { BookOpen } from 'lucide-react';
+import { useTranslation } from '@/context/language-context';
 
 export function SelectionForm() {
   const router = useRouter();
+  const { t } = useTranslation();
   const [selectedGrade, setSelectedGrade] = useState<string>('');
   const [selectedSubject, setSelectedSubject] = useState<string>('');
   const [selectedChapter, setSelectedChapter] = useState<string>('');
@@ -49,7 +51,7 @@ export function SelectionForm() {
       <div className="space-y-2">
         <Select onValueChange={setSelectedGrade} value={selectedGrade}>
           <SelectTrigger className="w-full h-12 text-base">
-            <SelectValue placeholder="ધોરણ પસંદ કરો" />
+            <SelectValue placeholder={t('selectionForm.selectGrade')} />
           </SelectTrigger>
           <SelectContent>
             {availableGrades.map(grade => (
@@ -63,7 +65,7 @@ export function SelectionForm() {
       <div className="space-y-2">
         <Select onValueChange={setSelectedSubject} value={selectedSubject} disabled={!selectedGrade}>
           <SelectTrigger className="w-full h-12 text-base">
-            <SelectValue placeholder="વિષય પસંદ કરો" />
+            <SelectValue placeholder={t('selectionForm.selectSubject')} />
           </SelectTrigger>
           <SelectContent>
             {subjects.map(subject => (
@@ -77,7 +79,7 @@ export function SelectionForm() {
       <div className="space-y-2">
         <Select onValueChange={setSelectedChapter} value={selectedChapter} disabled={!selectedSubject}>
           <SelectTrigger className="w-full h-12 text-base">
-            <SelectValue placeholder="પ્રકરણ પસંદ કરો" />
+            <SelectValue placeholder={t('selectionForm.selectChapter')} />
           </SelectTrigger>
           <SelectContent>
             {chapters.map(chapter => (
@@ -91,11 +93,11 @@ export function SelectionForm() {
       <Button
         type="submit"
         size="lg"
-        className="w-full text-lg text-primary-foreground transition-all duration-700 hover:bg-accent hover:shadow-lg hover:-translate-y-2"
+        className="w-full bg-primary text-lg text-primary-foreground transition-all duration-300 hover:bg-accent hover:shadow-lg hover:-translate-y-1"
         disabled={!selectedGrade || !selectedSubject || !selectedChapter}
       >
         <BookOpen className="mr-2 h-5 w-5" />
-        અભ્યાસ શરૂ કરો
+        {t('selectionForm.startButton')}
       </Button>
     </form>
   );

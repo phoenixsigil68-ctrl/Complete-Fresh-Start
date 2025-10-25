@@ -7,10 +7,12 @@ import type { Chapter } from '@/lib/types';
 import { Loader2, Pilcrow, Sparkles, AlertTriangle } from 'lucide-react';
 import { Card, CardContent } from '../ui/card';
 import { Alert, AlertDescription, AlertTitle } from '../ui/alert';
+import { useTranslation } from '@/context/language-context';
 
 export function ContentSummarizer({ chapter }: { chapter: Chapter }) {
   const [state, setState] = useState<SummarizeContentState | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const { t } = useTranslation();
 
   const handleGenerateSummary = async () => {
     setIsLoading(true);
@@ -24,22 +26,22 @@ export function ContentSummarizer({ chapter }: { chapter: Chapter }) {
     <div>
       <h3 className="text-xl font-bold font-headline mb-3 text-primary flex items-center">
         <Pilcrow className="mr-3 h-6 w-6" />
-        AI સારાંશ
+        {t('summarizer.title')}
       </h3>
       <p className="mb-4 text-muted-foreground text-sm">
-        આખા પ્રકરણનો મુખ્ય સારાંશ મેળવવા માટે નીચેનું બટન દબાવો.
+        {t('summarizer.description')}
       </p>
 
       <Button onClick={handleGenerateSummary} disabled={isLoading}>
         {isLoading ? (
           <>
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            તૈયાર કરી રહ્યું છે...
+            {t('summarizer.loading')}
           </>
         ) : (
           <>
             <Sparkles className="mr-2 h-4 w-4" />
-            સારાંશ બનાવો
+            {t('summarizer.button')}
           </>
         )}
       </Button>
@@ -47,7 +49,7 @@ export function ContentSummarizer({ chapter }: { chapter: Chapter }) {
       {isLoading && (
          <div className="flex items-center text-muted-foreground text-sm mt-4">
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            <span>AI તમારા માટે સારાંશ તૈયાર કરી રહ્યું છે...</span>
+            <span>{t('summarizer.generating')}</span>
         </div>
       )}
 
@@ -64,7 +66,7 @@ export function ContentSummarizer({ chapter }: { chapter: Chapter }) {
       {state?.error && !isLoading && (
          <Alert variant="destructive" className="mt-4">
             <AlertTriangle className="h-4 w-4" />
-            <AlertTitle>ઓહ ના!</AlertTitle>
+            <AlertTitle>{t('summarizer.errorTitle')}</AlertTitle>
             <AlertDescription>{state.error}</AlertDescription>
           </Alert>
       )}

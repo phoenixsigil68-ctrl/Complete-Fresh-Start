@@ -9,11 +9,13 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui
 import { Alert, AlertTitle, AlertDescription } from '../ui/alert';
 import { useToast } from '@/hooks/use-toast';
 import { FlashcardCarousel } from './flashcard-carousel';
+import { useTranslation } from '@/context/language-context';
 
 export function FlashcardView({ chapter }: { chapter: Chapter }) {
   const [state, setState] = useState<CreateFlashcardsState | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
+  const { t } = useTranslation();
 
   const handleGenerate = async () => {
     setIsLoading(true);
@@ -25,7 +27,7 @@ export function FlashcardView({ chapter }: { chapter: Chapter }) {
     if (!result.success) {
       toast({
         variant: 'destructive',
-        title: 'ભૂલ',
+        title: t('flashcardView.errorTitle'),
         description: result.message,
       });
     }
@@ -34,9 +36,9 @@ export function FlashcardView({ chapter }: { chapter: Chapter }) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>AI ફ્લેશકાર્ડ જનરેટર</CardTitle>
+        <CardTitle>{t('flashcardView.title')}</CardTitle>
         <CardDescription>
-          આ પ્રકરણના મુખ્ય મુદ્દાઓમાંથી ઝડપથી શીખવા અને યાદ રાખવા માટે AI નો ઉપયોગ કરીને ફ્લેશકાર્ડ્સ બનાવો.
+          {t('flashcardView.description')}
         </CardDescription>
       </CardHeader>
       <CardContent className="flex flex-col items-center justify-center space-y-6">
@@ -45,12 +47,12 @@ export function FlashcardView({ chapter }: { chapter: Chapter }) {
             {isLoading ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                બનાવી રહ્યું છે...
+                {t('flashcardView.creating')}
               </>
             ) : (
               <>
                 <Sparkles className="mr-2 h-4 w-4" />
-                ફ્લેશકાર્ડ્સ બનાવો
+                {t('flashcardView.createButton')}
               </>
             )}
           </Button>
@@ -59,7 +61,7 @@ export function FlashcardView({ chapter }: { chapter: Chapter }) {
         {isLoading && (
             <div className="flex flex-col items-center text-muted-foreground">
                 <Loader2 className="h-8 w-8 animate-spin mb-2" />
-                <p>AI તમારા માટે ફ્લેશકાર્ડ્સ તૈયાર કરી રહ્યું છે...</p>
+                <p>{t('flashcardView.generating')}</p>
             </div>
         )}
 
@@ -71,12 +73,12 @@ export function FlashcardView({ chapter }: { chapter: Chapter }) {
                     {isLoading ? (
                     <>
                         <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                        ફરીથી બનાવી રહ્યું છે...
+                        {t('flashcardView.creatingNew')}
                     </>
                     ) : (
                     <>
                         <Sparkles className="mr-2 h-4 w-4" />
-                        નવા ફ્લેશકાર્ડ્સ બનાવો
+                        {t('flashcardView.createNew')}
                     </>
                     )}
                 </Button>
@@ -87,14 +89,14 @@ export function FlashcardView({ chapter }: { chapter: Chapter }) {
         {!isLoading && state && !state.success && (
           <Alert variant="destructive" className="w-full max-w-md">
             <AlertTriangle className="h-4 w-4" />
-            <AlertTitle>ઓહ ના!</AlertTitle>
+            <AlertTitle>{t('flashcardView.errorTitle')}</AlertTitle>
             <AlertDescription>{state.message}</AlertDescription>
           </Alert>
         )}
 
         {!isLoading && !state && (
              <div className="flex items-center justify-center h-40 text-muted-foreground text-center p-4 border-2 border-dashed rounded-lg w-full">
-              <p>ફ્લેશકાર્ડ્સ બનાવવા માટે બટન પર ક્લિક કરો.</p>
+              <p>{t('flashcardView.initialPrompt')}</p>
             </div>
         )}
       </CardContent>

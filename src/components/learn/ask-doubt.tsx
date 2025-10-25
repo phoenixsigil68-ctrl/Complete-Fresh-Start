@@ -8,6 +8,7 @@ import { askDoubtAction, type AskDoubtState } from '@/app/actions';
 import type { Chapter } from '@/lib/types';
 import { HelpCircle, Loader2, Send } from 'lucide-react';
 import { Card, CardContent } from '../ui/card';
+import { useTranslation } from '@/context/language-context';
 
 const initialAskDoubtState: AskDoubtState = {
   formKey: 0,
@@ -17,17 +18,18 @@ const initialAskDoubtState: AskDoubtState = {
 
 function SubmitButton() {
   const { pending } = useFormStatus();
+  const { t } = useTranslation();
   return (
     <Button type="submit" disabled={pending}>
       {pending ? (
         <>
           <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-          પૂછી રહ્યું છે...
+          {t('askDoubt.loading')}
         </>
       ) : (
         <>
           <Send className="mr-2 h-4 w-4" />
-          પ્રશ્ન પૂછો
+          {t('askDoubt.button')}
         </>
       )}
     </Button>
@@ -37,22 +39,23 @@ function SubmitButton() {
 export function AskDoubt({ chapter }: { chapter: Chapter }) {
   const [state, formAction, isPending] = useActionState(askDoubtAction, initialAskDoubtState);
   const formRef = useRef<HTMLFormElement>(null);
+  const { t } = useTranslation();
 
   return (
     <div>
       <h3 className="text-xl font-bold font-headline mb-3 text-primary flex items-center">
         <HelpCircle className="mr-3 h-6 w-6" />
-        શંકા પૂછો
+        {t('askDoubt.title')}
       </h3>
       <p className="mb-4 text-muted-foreground text-sm">
-        આ પ્રકરણ વિશે કોઈ પ્રશ્ન છે? અહીં પૂછો અને તરત જ AI-સંચાલિત જવાબ મેળવો.
+        {t('askDoubt.description')}
       </p>
 
       <form ref={formRef} key={state.formKey} action={formAction} className="flex flex-col items-start space-y-4">
         <input type="hidden" name="chapterContent" value={chapter.content} />
         <Textarea
           name="question"
-          placeholder="ઉદાહરણ: 'સંમેય અને અસંમેય સંખ્યાઓ વચ્ચે શું તફાવત છે?'"
+          placeholder={t('askDoubt.placeholder')}
           className="bg-background"
           rows={3}
           required
@@ -66,7 +69,7 @@ export function AskDoubt({ chapter }: { chapter: Chapter }) {
             <p className="font-semibold text-sm text-primary">{state.question}</p>
             <div className="flex items-center text-muted-foreground text-sm">
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                <span>AI જવાબ તૈયાર કરી રહ્યું છે...</span>
+                <span>{t('askDoubt.generating')}</span>
             </div>
           </CardContent>
         </Card>

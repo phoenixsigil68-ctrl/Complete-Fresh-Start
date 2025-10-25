@@ -1,16 +1,16 @@
 'use client';
 
-import { useActionState } from 'react';
+import { useActionState, useEffect } from 'react';
 import { useFormStatus } from 'react-dom';
 import { Button } from '@/components/ui/button';
 import { createQuizAction, type CreateQuizState } from '@/app/actions';
 import type { Chapter, Grade, Subject } from '@/lib/types';
-import { useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 import { Lightbulb, Sparkles } from 'lucide-react';
+import { useTranslation } from '@/context/language-context';
 
 const initialState: CreateQuizState = {
   formKey: 0,
@@ -21,10 +21,11 @@ const initialState: CreateQuizState = {
 
 function SubmitButton() {
   const { pending } = useFormStatus();
+  const { t } = useTranslation();
   return (
     <Button type="submit" disabled={pending} className="bg-primary hover:bg-primary/90">
       <Sparkles className="mr-2 h-4 w-4" />
-      {pending ? 'બનાવી રહ્યું છે...' : 'નવી ક્વિઝ બનાવો'}
+      {pending ? t('quizGenerator.loading') : t('quizGenerator.button')}
     </Button>
   );
 }
@@ -32,16 +33,17 @@ function SubmitButton() {
 export function QuizGenerator({ chapter, grade, subject }: { chapter: Chapter; grade: Grade; subject: Subject }) {
   const [state, formAction] = useActionState(createQuizAction, initialState);
   const { toast } = useToast();
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (state.message) {
       toast({
         variant: state.success ? 'default' : 'destructive',
-        title: state.success ? 'સફળતા' : 'ભૂલ',
+        title: state.success ? t('quizGenerator.success') : t('quizGenerator.error'),
         description: state.message,
       });
     }
-  }, [state, toast]);
+  }, [state, toast, t]);
 
   return (
     <div className="space-y-4">
@@ -56,8 +58,8 @@ export function QuizGenerator({ chapter, grade, subject }: { chapter: Chapter; g
         <div className="mt-6 space-y-6">
           <Alert>
             <Lightbulb className="h-4 w-4" />
-            <AlertTitle>નવા પ્રશ્નો</AlertTitle>
-            <AlertDescription>AI દ્વારા બનાવેલ નવા પ્રશ્નો નીચે મુજબ છે.</AlertDescription>
+            <AlertTitle>{t('quizGenerator.newQuestionsTitle')}</AlertTitle>
+            <AlertDescription>{t('quizGenerator.newQuestionsDescription')}</AlertDescription>
           </Alert>
           {state.data.questions.map((q, index) => (
             <div key={index} className="p-4 border rounded-lg bg-background">

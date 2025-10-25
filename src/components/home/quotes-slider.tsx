@@ -5,10 +5,14 @@ import Autoplay from 'embla-carousel-autoplay';
 
 import { Card, CardContent } from '@/components/ui/card';
 import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel';
-import { quotes } from '@/lib/quotes';
+import { useTranslation } from '@/context/language-context';
 
 export function QuotesSlider() {
   const plugin = React.useRef(Autoplay({ delay: 5000, stopOnInteraction: false, stopOnMouseEnter: true }));
+  const { t } = useTranslation();
+
+  const quotes = t('quotes') as unknown as { text: string; author: string }[];
+
 
   return (
     <Carousel

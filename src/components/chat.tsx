@@ -11,6 +11,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
 import { Message } from 'genkit';
+import { useTranslation } from '@/context/language-context';
 
 const initialChatState: ChatState = {
   formKey: 0,
@@ -20,10 +21,11 @@ const initialChatState: ChatState = {
 
 function SubmitButton() {
   const { pending } = useFormStatus();
+  const { t } = useTranslation();
   return (
     <Button type="submit" size="icon" disabled={pending}>
       {pending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
-      <span className="sr-only">Send Message</span>
+      <span className="sr-only">{t('chat.sendMessage')}</span>
     </Button>
   );
 }
@@ -33,6 +35,7 @@ function MessageActions({ message }: { message: Message }) {
     const [isPlaying, setIsPlaying] = useState(false);
     const { toast } = useToast();
     const audioRef = useRef<HTMLAudioElement>(null);
+    const { t } = useTranslation();
 
     const messageText = message.content.map(part => part.text).join('');
     const audioPart = message.content.find(part => part.data?.uri);
@@ -41,7 +44,7 @@ function MessageActions({ message }: { message: Message }) {
     const handleCopy = () => {
         navigator.clipboard.writeText(messageText).then(() => {
             setIsCopied(true);
-            toast({ title: 'Message copied!', description: 'Response has been copied to clipboard.' });
+            toast({ title: t('chat.messageCopied'), description: t('chat.copyDescription') });
             setTimeout(() => setIsCopied(false), 2000);
         });
     };
@@ -51,7 +54,7 @@ function MessageActions({ message }: { message: Message }) {
 
         if (isPlaying) {
             audioRef.current.pause();
-            audioRef.current.currentTime = 0; // Reset audio to the beginning
+            audioRef.current.currentTime = 0;
             setIsPlaying(false);
         } else {
             audioRef.current.play();
@@ -83,7 +86,7 @@ function MessageActions({ message }: { message: Message }) {
                         className="h-6 w-6 text-muted-foreground hover:bg-background/50 hover:text-foreground"
                     >
                         {isPlaying ? <StopCircle className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}
-                        <span className="sr-only">{isPlaying ? 'Stop audio' : 'Play audio'}</span>
+                        <span className="sr-only">{isPlaying ? t('chat.stopAudio') : t('chat.playAudio')}</span>
                     </Button>
                 </>
             )}
@@ -94,7 +97,7 @@ function MessageActions({ message }: { message: Message }) {
                 className="h-6 w-6 text-muted-foreground hover:bg-background/50 hover:text-foreground"
             >
                 {isCopied ? <Check className="h-4 w-4 text-green-500" /> : <Copy className="h-4 w-4" />}
-                <span className="sr-only">Copy response</span>
+                <span className="sr-only">{t('chat.copyResponse')}</span>
             </Button>
         </div>
     );
@@ -106,12 +109,13 @@ export function Chat() {
   const inputRef = useRef<HTMLInputElement>(null);
   const viewportRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
+  const { t } = useTranslation();
   
   useEffect(() => {
     if (state.error) {
-        toast({ variant: 'destructive', title: 'Chat Error', description: state.error });
+        toast({ variant: 'destructive', title: t('chat.chatError'), description: state.error });
     }
-  }, [state.error, toast]);
+  }, [state.error, toast, t]);
 
   useEffect(() => {
     if (state.formKey > 0) {
@@ -131,9 +135,9 @@ export function Chat() {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Bot />
-          વિદ્યાર્થી મિત્ર
+          {t('chat.botName')}
         </CardTitle>
-        <CardDescription>તમારા અભ્યાસ વિશે મને કંઈપણ પૂછો.</CardDescription>
+        <CardDescription>{t('chat.botGreeting')}</CardDescription>
       </CardHeader>
       <CardContent>
         <ScrollArea className="h-96 w-full pr-4" viewportRef={viewportRef}>
@@ -172,7 +176,7 @@ export function Chat() {
       <CardFooter>
         <form ref={formRef} key={state.formKey} action={formAction} className="flex w-full items-center space-x-2">
           <input type="hidden" name="history" value={JSON.stringify(state.messages)} />
-          <Input name="message" ref={inputRef} placeholder="તમારો પ્રશ્ન લખો..." className="flex-1" autoComplete="off" />
+          <Input name="message" ref={inputRef} placeholder={t('chat.inputPlaceholder')} className="flex-1" autoComplete="off" />
           <SubmitButton />
         </form>
       </CardFooter>

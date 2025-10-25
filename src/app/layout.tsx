@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
-import { Analytics } from "@vercel/analytics/react"
+import { LanguageProvider } from '@/context/language-context';
 
 export const metadata: Metadata = {
   title: 'વિદ્યાર્થી સહાયક',
@@ -32,11 +32,12 @@ export default function RootLayout({
         <meta name="theme-color" content="#09090B" />
       </head>
       <body className="font-body antialiased">
-        <div className="relative min-h-screen">
-            {children}
-        </div>
-        <Toaster />
-        
+        <LanguageProvider>
+          <div className="relative min-h-screen">
+              {children}
+          </div>
+          <Toaster />
+        </LanguageProvider>
       </body>
     </html>
   );

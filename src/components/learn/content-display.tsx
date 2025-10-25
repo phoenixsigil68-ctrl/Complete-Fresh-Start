@@ -10,8 +10,10 @@ import Link from 'next/link';
 import { AskDoubt } from './ask-doubt';
 import { Separator } from '../ui/separator';
 import { ContentSummarizer } from './content-summarizer';
+import { useTranslation } from '@/context/language-context';
 
 export function ContentDisplay({ chapter, grade, subject }: { chapter: Chapter, grade: Grade, subject: Subject }) {
+  const { t } = useTranslation();
   const chapterImage = placeholderImages.placeholderImages.find(img => img.id === chapter.imageUrl);
   const youtubeSearchQuery = encodeURIComponent(`${grade.name} ${subject.name} ${chapter.name}`);
   const youtubeSearchUrl = `https://www.youtube.com/results?search_query=${youtubeSearchQuery}`;
@@ -34,14 +36,14 @@ export function ContentDisplay({ chapter, grade, subject }: { chapter: Chapter, 
                 <div>
                     <h3 className="text-xl font-bold font-headline mb-3 text-primary flex items-center">
                         <BookMarked className="mr-3 h-6 w-6" />
-                        પાઠ્યપુસ્તક
+                        {t('contentDisplay.textbook')}
                     </h3>
                     <p className="mb-4 text-muted-foreground text-sm">
-                        સંપૂર્ણ પ્રકરણ વાંચવા માટે સત્તાવાર પાઠ્યપુસ્તક ખોલો.
+                        {t('contentDisplay.textbookDescription')}
                     </p>
                     <Button asChild className="w-full">
                         <Link href={chapter.textbookUrl || 'https://www.selfstudys.com/'} target="_blank" rel="noopener noreferrer">
-                        પાઠ્યપુસ્તક ખોલો
+                        {t('contentDisplay.openTextbook')}
                         <ExternalLink className="ml-2 h-4 w-4" />
                         </Link>
                     </Button>
@@ -52,14 +54,14 @@ export function ContentDisplay({ chapter, grade, subject }: { chapter: Chapter, 
                 <div>
                     <h3 className="text-xl font-bold font-headline mb-3 text-primary flex items-center">
                         <Youtube className="mr-3 h-6 w-6" />
-                        વિડિઓ લેક્ચર
+                        {t('contentDisplay.videoLecture')}
                     </h3>
                     <p className="mb-4 text-muted-foreground text-sm">
-                        આ પ્રકરણને લગતા વિડિઓ લેક્ચર્સ શોધવા માટે YouTube પર જાઓ.
+                        {t('contentDisplay.videoLectureDescription')}
                     </p>
                     <Button asChild variant="secondary" className="w-full">
                         <Link href={youtubeSearchUrl} target="_blank" rel="noopener noreferrer">
-                        YouTube પર શોધો
+                        {t('contentDisplay.searchOnYouTube')}
                         <ExternalLink className="ml-2 h-4 w-4" />
                         </Link>
                     </Button>
@@ -81,7 +83,7 @@ export function ContentDisplay({ chapter, grade, subject }: { chapter: Chapter, 
         {chapter.videoUrl && (
             <Card className="md:col-span-2">
                 <CardContent className="p-6">
-                    <h3 className="text-2xl font-bold font-headline mb-4 text-primary">વિડિઓ લેક્ચર</h3>
+                    <h3 className="text-2xl font-bold font-headline mb-4 text-primary">{t('contentDisplay.videoLecture')}</h3>
                     <div className="aspect-video rounded-lg overflow-hidden">
                         <iframe
                         className="w-full h-full border-0"
