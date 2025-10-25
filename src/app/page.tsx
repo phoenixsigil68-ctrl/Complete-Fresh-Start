@@ -1,87 +1,72 @@
-import Image from 'next/image';
+import { DailyProgress } from '@/components/home/daily-progress';
+import { QuotesSlider } from '@/components/home/quotes-slider';
+import { SelectionForm } from '@/components/home/selection-form';
 import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { FileImage, GraduationCap, Sparkles } from 'lucide-react';
 import Link from 'next/link';
-import { ChevronRight, Zap } from 'lucide-react';
-import placeholderImages from '@/lib/placeholder-images.json';
 
-const NavLink = ({ href, children }: { href: string; children: React.ReactNode }) => (
-  <Link href={href} className="text-sm font-semibold text-foreground/80 hover:text-foreground transition-colors">
-    {children}
-  </Link>
-);
-
-const Logo = () => (
-    <div className="flex items-center gap-2">
-        <div className="w-8 h-8 bg-primary rounded-md flex items-center justify-center">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 2L2 7V17L12 22L22 17V7L12 2Z" stroke="hsl(var(--primary-foreground))" strokeWidth="2" strokeLinejoin="round"/>
-                <path d="M2 7L12 12L22 7" stroke="hsl(var(--primary-foreground))" strokeWidth="2" strokeLinejoin="round"/>
-                <path d="M12 12V22" stroke="hsl(var(--primary-foreground))" strokeWidth="2" strokeLinejoin="round"/>
-            </svg>
+function Header() {
+  return (
+    <header className="relative text-center mb-8 pt-8">
+      <div className="absolute top-4 right-4">
+        <Button asChild variant="ghost">
+          <Link href="/chatbot">ચેટ કરો</Link>
+        </Button>
+      </div>
+      <div className="inline-block bg-primary/10 p-3 rounded-full">
+        <div className="inline-block bg-primary/20 p-2 rounded-full">
+          <GraduationCap className="h-12 w-12 text-primary" />
         </div>
-        <span className="font-bold text-xl">XORA</span>
-    </div>
-)
-
+      </div>
+      <h1 className="text-4xl font-bold font-headline mt-4 text-primary">વિદ્યાર્થી સહાયક</h1>
+      <p className="text-muted-foreground mt-2 text-lg">તમારા અભ્યાસ માટે AI-સંચાલિત માર્ગદર્શક</p>
+    </header>
+  );
+}
 
 export default function Home() {
-  const heroImageData = placeholderImages.placeholderImages.find(img => img.id === 'xora-hero');
-
   return (
-    <div className="flex flex-col min-h-screen">
-      <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-sm">
-        <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between h-16 border-b border-white/10">
-            <div className="flex items-center gap-10">
-              <Logo />
-              <nav className="hidden md:flex items-center gap-6">
-                <NavLink href="#">FEATURES</NavLink>
-                <NavLink href="#">PRICING</NavLink>
-                <NavLink href="#">FAQ</NavLink>
-              </nav>
+    <div
+      className="min-h-screen bg-background bg-cover bg-center"
+    >
+      <div className="min-h-screen bg-background/90 backdrop-blur-sm">
+        <main className="container mx-auto p-4 md:p-8">
+          <Header />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <Card className="bg-card/80 backdrop-blur-sm shadow-lg border">
+              <CardHeader>
+                <CardTitle>ચાલો શરૂ કરીએ!</CardTitle>
+                <CardDescription>તમારું ધોરણ, વિષય અને પ્રકરણ પસંદ કરો.</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <SelectionForm />
+              </CardContent>
+            </Card>
+
+            <div className="space-y-8">
+              <DailyProgress />
+              <Card className="bg-card/80 backdrop-blur-sm shadow-lg border">
+                <CardHeader>
+                    <CardTitle className="flex items-center">
+                        <Sparkles className="mr-3 text-primary h-5 w-5"/>
+                        છબીમાંથી ક્વિઝ બનાવો
+                    </CardTitle>
+                    <CardDescription>પાઠ્યપુસ્તકના પૃષ્ઠની છબી અપલોડ કરીને ક્વિઝ બનાવો.</CardDescription>
+                </CardHeader>
+                <CardContent>
+                    <Button asChild variant="outline">
+                        <Link href="/quiz-from-image">
+                            અહીં ક્લિક કરો
+                        </Link>
+                    </Button>
+                </CardContent>
+              </Card>
+              <QuotesSlider />
             </div>
-            <Button asChild variant="ghost" className="hidden md:flex">
-              <Link href="#">DOWNLOAD</Link>
-            </Button>
           </div>
-        </div>
-      </header>
-
-      <main className="flex-1 flex flex-col items-center justify-center text-center px-4 pt-16">
-        <div className="relative w-full max-w-5xl mx-auto">
-           {heroImageData && (
-            <div className="absolute -bottom-48 right-0 w-[600px] h-[400px] opacity-40 md:opacity-70">
-              <Image
-                src={heroImageData.imageUrl}
-                alt={heroImageData.description}
-                fill
-                className="object-contain"
-                data-ai-hint={heroImageData.imageHint}
-                priority
-              />
-            </div>
-           )}
-
-          <div className="relative z-10 flex flex-col items-center md:items-start text-center md:text-left max-w-lg">
-            <span className="font-semibold text-primary mb-2 text-sm tracking-widest">TUTOR AI</span>
-            <h1 className="text-5xl md:text-7xl font-black uppercase tracking-tighter mb-4">
-              Amazingly Simple
-            </h1>
-            <p className="text-lg md:text-xl text-foreground/60 max-w-md mb-8">
-              We designed XORA AI to be an easy to use, quick to learn and surprisingly powerful.
-            </p>
-            <Button size="lg" className="group bg-primary/90 hover:bg-primary text-primary-foreground shadow-lg shadow-primary/20 hover:shadow-primary/40 transition-all duration-300 transform hover:-translate-y-1">
-              <Zap className="mr-2 h-5 w-5 transform group-hover:rotate-12 transition-transform" />
-              TRY IT NOW
-              <ChevronRight className="ml-2 h-5 w-5" />
-            </Button>
-          </div>
-        </div>
-      </main>
-
-      <footer className="z-10 text-center text-muted-foreground text-sm py-4">
-        <p>Built with love for the future of learning.</p>
-      </footer>
+        </main>
+      </div>
     </div>
   );
 }
