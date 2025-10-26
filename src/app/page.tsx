@@ -1,3 +1,5 @@
+'use client';
+
 import { DailyProgress } from '@/components/home/daily-progress';
 import { QuotesSlider } from '@/components/home/quotes-slider';
 import { SelectionForm } from '@/components/home/selection-form';
