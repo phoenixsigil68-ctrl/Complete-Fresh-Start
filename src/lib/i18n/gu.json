@@ -36,7 +36,10 @@
         "openTextbook": "પાઠ્યપુસ્તક ખોલો",
         "videoLecture": "વિડિઓ લેક્ચર",
         "videoLectureDescription": "આ પ્રકરણને લગતા વિડિઓ લેક્ચર્સ શોધવા માટે YouTube પર જાઓ.",
-        "searchOnYouTube": "YouTube પર શોધો"
+        "searchOnYouTube": "YouTube પર શોધો",
+        "chatbotTitle": "ચેટબોટ સાથે વાત કરો",
+        "chatbotDescription": "તમારા પ્રશ્નો પૂછો અને અમારા AI ચેટબોટ પાસેથી ત્વરિત જવાબો મેળવો.",
+        "chatbotButton": "ચેટબોટ ખોલો"
     },
     "summarizer": {
         "title": "AI સારાંશ",

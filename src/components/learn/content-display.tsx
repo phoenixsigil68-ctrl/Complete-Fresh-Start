@@ -4,7 +4,7 @@ import type { Chapter, Grade, Subject } from '@/lib/types';
 import Image from 'next/image';
 import { Card, CardContent } from '@/components/ui/card';
 import placeholderImages from '@/lib/placeholder-images.json';
-import { BookMarked, ExternalLink, Youtube } from 'lucide-react';
+import { BookMarked, ExternalLink, Youtube, Bot } from 'lucide-react';
 import { Button } from '../ui/button';
 import Link from 'next/link';
 import { Separator } from '../ui/separator';
@@ -75,6 +75,26 @@ export function ContentDisplay({ chapter, grade, subject }: { chapter: Chapter, 
               />
           </Card>
         )}
+
+        <Card>
+            <CardContent className="p-6">
+                 <div>
+                    <h3 className="text-xl font-bold font-headline mb-3 text-primary flex items-center">
+                        <Bot className="mr-3 h-6 w-6" />
+                        {t('contentDisplay.chatbotTitle')}
+                    </h3>
+                    <p className="mb-4 text-muted-foreground text-sm">
+                        {t('contentDisplay.chatbotDescription')}
+                    </p>
+                    <Button asChild className="w-full">
+                        <Link href="http://localhost:5173/chatbot" target="_blank" rel="noopener noreferrer">
+                        {t('contentDisplay.chatbotButton')}
+                        <ExternalLink className="ml-2 h-4 w-4" />
+                        </Link>
+                    </Button>
+                </div>
+            </CardContent>
+        </Card>
 
         {chapter.videoUrl && (
             <Card className="md:col-span-2">

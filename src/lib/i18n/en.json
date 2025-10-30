@@ -36,7 +36,10 @@
         "openTextbook": "Open Textbook",
         "videoLecture": "Video Lecture",
         "videoLectureDescription": "Go to YouTube to find video lectures related to this chapter.",
-        "searchOnYouTube": "Search on YouTube"
+        "searchOnYouTube": "Search on YouTube",
+        "chatbotTitle": "Talk to Chatbot",
+        "chatbotDescription": "Ask your questions and get instant answers from our AI chatbot.",
+        "chatbotButton": "Open Chatbot"
     },
     "summarizer": {
         "title": "AI Summary",
