@@ -7,7 +7,6 @@ import placeholderImages from '@/lib/placeholder-images.json';
 import { BookMarked, ExternalLink, Youtube } from 'lucide-react';
 import { Button } from '../ui/button';
 import Link from 'next/link';
-import { AskDoubt } from './ask-doubt';
 import { Separator } from '../ui/separator';
 import { ContentSummarizer } from './content-summarizer';
 import { useTranslation } from '@/context/language-context';
@@ -26,12 +25,8 @@ export function ContentDisplay({ chapter, grade, subject }: { chapter: Chapter, 
                 <ContentSummarizer chapter={chapter} />
             </CardContent>
         </Card>
-        <Card>
-            <CardContent className="p-6">
-                <AskDoubt chapter={chapter} />
-            </CardContent>
-        </Card>
-        <Card>
+        
+        <Card className="row-span-1 md:row-span-2">
             <CardContent className="p-6 space-y-6">
                 <div>
                     <h3 className="text-xl font-bold font-headline mb-3 text-primary flex items-center">
@@ -68,6 +63,7 @@ export function ContentDisplay({ chapter, grade, subject }: { chapter: Chapter, 
                 </div>
             </CardContent>
         </Card>
+
          {chapterImage && (
           <Card className="overflow-hidden aspect-video">
               <Image

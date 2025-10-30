@@ -46,14 +46,6 @@
         "errorTitle": "ઓહ ના!",
         "generating": "AI તમારા માટે સારાંશ તૈયાર કરી રહ્યું છે..."
     },
-    "askDoubt": {
-        "title": "શંકા પૂછો",
-        "description": "આ પ્રકરણ વિશે કોઈ પ્રશ્ન છે? અહીં પૂછો અને તરત જ AI-સંચાલિત જવાબ મેળવો.",
-        "placeholder": "ઉદાહરણ: 'સંમેય અને અસંમેય સંખ્યાઓ વચ્ચે શું તફાવત છે?'",
-        "button": "પ્રશ્ન પૂછો",
-        "loading": "પૂછી રહ્યું છે...",
-        "generating": "AI જવાબ તૈયાર કરી રહ્યું છે..."
-    },
     "flashcardView": {
         "title": "AI ફ્લેશકાર્ડ જનરેટર",
         "description": "આ પ્રકરણના મુખ્ય મુદ્દાઓમાંથી ઝડપથી શીખવા અને યાદ રાખવા માટે AI નો ઉપયોગ કરીને ફ્લેશકાર્ડ્સ બનાવો.",
@@ -114,20 +106,6 @@
         "quizReady": "ક્વિઝ તૈયાર છે!",
         "quizReadyDescription": "AI દ્વારા બનાવેલ નવા પ્રશ્નો નીચે મુજબ છે.",
         "errorOccurred": "એક ભૂલ આવી"
-    },
-    "chat": {
-        "title": "ચેટ કરો",
-        "subtitle": "તમારા મિત્ર, વિદ્યાર્થી મિત્ર સાથે વાત કરો.",
-        "botName": "વિદ્યાર્થી મિત્ર",
-        "botGreeting": "તમારા અભ્યાસ વિશે મને કંઈપણ પૂછો.",
-        "inputPlaceholder": "તમારો પ્રશ્ન લખો...",
-        "sendMessage": "Send Message",
-        "messageCopied": "Message copied!",
-        "copyDescription": "Response has been copied to clipboard.",
-        "playAudio": "Play audio",
-        "stopAudio": "Stop audio",
-        "copyResponse": "Copy response",
-        "chatError": "Chat Error"
     },
     "errors": {
         "invalidGrade": "અમાન્ય ધોરણ સ્તર.",

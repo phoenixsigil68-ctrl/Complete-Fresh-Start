@@ -2,7 +2,6 @@
 
 import { generateQuizQuestions } from '@/ai/flows/generate-quiz-questions';
 import type { GenerateQuizQuestionsOutput } from '@/ai/flows/generate-quiz-questions';
-import { askDoubt } from '@/ai/flows/ask-doubt-flow';
 import { generateFlashcards, type GenerateFlashcardsOutput } from '@/ai/flows/generate-flashcards-flow';
 import { summarizeContent } from '@/ai/flows/summarize-content-flow';
 import { generateQuizFromImage, type GenerateQuizFromImageOutput } from '@/ai/flows/generate-quiz-from-image-flow';
@@ -74,38 +73,6 @@ export async function createQuizAction(
     console.error(error);
     const message = error instanceof Error ? error.message : t('errors.unknown');
     return { ...prevState, success: false, message: t('errors.quizCreationFailed', { message }) };
-  }
-}
-
-export type AskDoubtState = {
-  formKey: number;
-  question: string;
-  answer: string | null;
-  error?: string;
-};
-
-export async function askDoubtAction(
-  prevState: AskDoubtState,
-  formData: FormData
-): Promise<AskDoubtState> {
-  const t = getT(formData.get('language') as 'gu' | 'en');
-  const question = formData.get('question') as string;
-  const chapterContent = formData.get('chapterContent') as string;
-
-  if (!question) {
-    return { ...prevState, error: t('errors.questionRequired'), answer: null };
-  }
-
-  try {
-    const response = await askDoubt({
-      chapterContent: chapterContent,
-      question: question,
-    });
-    return { formKey: prevState.formKey + 1, question, answer: response };
-  } catch (error) {
-    console.error(error);
-    const message = error instanceof Error ? error.message : t('errors.unknown');
-    return { ...prevState, question, error: t('errors.answerFailed', { message }), answer: null };
   }
 }
 
