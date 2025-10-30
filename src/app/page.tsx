@@ -5,7 +5,7 @@ import { QuotesSlider } from '@/components/home/quotes-slider';
 import { SelectionForm } from '@/components/home/selection-form';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { FileImage, GraduationCap, Sparkles, MessageSquare } from 'lucide-react';
+import { FileImage, GraduationCap, Sparkles } from 'lucide-react';
 import Link from 'next/link';
 import { LanguageToggle } from '@/components/language-toggle';
 import { useTranslation } from '@/context/language-context';
@@ -16,9 +16,6 @@ function Header() {
     <header className="relative text-center mb-8 pt-8">
       <div className="absolute top-4 right-4 flex items-center gap-4">
         <LanguageToggle />
-        <Button asChild variant="ghost">
-          <Link href="/chatbot">{t('chat.title')}</Link>
-        </Button>
       </div>
       <div className="inline-block bg-primary/10 p-3 rounded-full">
         <div className="inline-block bg-primary/20 p-2 rounded-full">

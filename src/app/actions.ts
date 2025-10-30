@@ -2,13 +2,10 @@
 
 import { generateQuizQuestions } from '@/ai/flows/generate-quiz-questions';
 import type { GenerateQuizQuestionsOutput } from '@/ai/flows/generate-quiz-questions';
-import { chat, type ChatInput } from '@/ai/flows/chat-flow';
 import { askDoubt } from '@/ai/flows/ask-doubt-flow';
 import { generateFlashcards, type GenerateFlashcardsOutput } from '@/ai/flows/generate-flashcards-flow';
 import { summarizeContent } from '@/ai/flows/summarize-content-flow';
 import { generateQuizFromImage, type GenerateQuizFromImageOutput } from '@/ai/flows/generate-quiz-from-image-flow';
-import { textToSpeech } from '@/ai/flows/text-to-speech-flow';
-import {type Message} from 'genkit';
 import guTranslations from '@/lib/i18n/gu.json';
 import enTranslations from '@/lib/i18n/en.json';
 
@@ -77,57 +74,6 @@ export async function createQuizAction(
     console.error(error);
     const message = error instanceof Error ? error.message : t('errors.unknown');
     return { ...prevState, success: false, message: t('errors.quizCreationFailed', { message }) };
-  }
-}
-
-export type ChatState = {
-  formKey: number;
-  messages: Message[];
-  error?: string;
-};
-
-export async function chatAction(
-  prevState: ChatState,
-  formData: FormData
-): Promise<ChatState> {
-  const t = getT(formData.get('language') as 'gu' | 'en');
-  const userInput = formData.get('message') as string;
-  if (!userInput) {
-    return { ...prevState, error: t('errors.messageRequired') };
-  }
-
-  const history = prevState.messages || [];
-  const newUserMessage: Message = { role: 'user', content: [{text: userInput}] };
-  const newHistory = [...history, newUserMessage];
-
-  try {
-    const responseText = await chat({
-      history: newHistory,
-      message: userInput,
-    });
-
-    const audioDataUri = await textToSpeech(responseText);
-    
-    const modelResponse: Message = { 
-      role: 'model', 
-      content: [
-        {text: responseText},
-        ...(audioDataUri ? [{data: {uri: audioDataUri, contentType: 'audio/wav'}}] : [])
-      ]
-    };
-
-    return {
-      formKey: prevState.formKey + 1,
-      messages: [...newHistory, modelResponse],
-    };
-  } catch (error) {
-    console.error(error);
-    const message = error instanceof Error ? error.message : t('errors.unknown');
-    return {
-      ...prevState,
-      messages: newHistory,
-      error: t('errors.responseFailed', { message }),
-    };
   }
 }
 
