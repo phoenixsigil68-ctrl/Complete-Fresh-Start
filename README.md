@@ -1,6 +1,46 @@
-tgit # Firebase Studio Project - विद्यार्थी સહાયક
+# Firebase Studio Project - विद्यार्थी સહાયક
 
-This is a Next.js application built within Firebase Studio. It's an educational platform for students in grades 9-12 in Gujarat.
+This is a Next.js application built within Firebase Studio. It's an educational platform for students in grades 9-12 in Gujarat, featuring AI-powered learning tools.
+
+## Project Structure Overview
+
+This project is built with Next.js and follows the App Router paradigm. Here’s a guide to help you navigate the codebase and make your own changes.
+
+### Core Directories
+
+- **`src/app`**: The heart of the application. Each folder inside represents a page or URL route.
+  - `page.tsx`: The homepage of the app.
+  - `layout.tsx`: The main layout that wraps all pages. It's where global styles and fonts are imported.
+  - `globals.css`: The global stylesheet, including Tailwind CSS configuration and your app's color theme.
+  - `learn/[...slug]/page.tsx`: The dynamic learning page that displays content for a specific chapter.
+  - `quiz-from-image/page.tsx`: The page for the "Create Quiz from Image" feature.
+  - `actions.ts`: Contains Server Actions, which are functions that run on the server for handling forms and calling AI models.
+
+- **`src/components`**: Contains all the reusable React components.
+  - `ui/`: Core UI building blocks from ShadCN, like `Button.tsx`, `Card.tsx`, and `Select.tsx`.
+  - `home/`: Components specifically for the homepage (e.g., `SelectionForm.tsx`).
+  - `learn/`: Components for the learning page (e.g., `ContentDisplay.tsx`, `FlashcardView.tsx`).
+  - `language-toggle.tsx`: The component that allows users to switch between English and Gujarati.
+
+- **`src/lib`**: A library of shared code, data, and configurations.
+  - `data.ts`: Contains all the structured content for grades, subjects, and chapters. **To add a new chapter or subject, you would edit this file.**
+  - `types.ts`: Defines the TypeScript types for your data structures (e.g., `Chapter`, `Grade`).
+  - `i18n/`: Holds the translation files (`en.json`, `gu.json`) for English and Gujarati text.
+  - `utils.ts`: Utility functions, such as the `cn` function for merging Tailwind CSS classes.
+
+- **`src/ai`**: Home to all the generative AI functionality, powered by Genkit.
+  - `genkit.ts`: Initializes and configures the connection to Google's AI models.
+  - `flows/`: Contains the AI "flows." Each file defines a specific task, such as generating quiz questions (`generate-quiz-questions.ts`) or summarizing content (`summarize-content-flow.ts`). The prompts sent to the AI are defined in these files.
+
+- **`public`**: For static files that are publicly accessible.
+  - This is where you would place images, favicons, and other assets that don't need to be processed by the build system.
+
+- **Configuration Files**
+  - `tailwind.config.ts`: Configures Tailwind CSS, including custom fonts and animations.
+  - `next.config.ts`: Configuration for Next.js, such as allowing images from external domains.
+  - `package.json`: Lists all project dependencies (like React, Next.js, and Genkit) and scripts (like `npm run dev`).
+
+---
 
 ## Running Your Project Locally
 
@@ -67,6 +107,3 @@ Follow these steps to get your project onto your PC:
       ```
 
 Your app should now be running locally! You can open the project folder in your favorite code editor (like VS Code) and start making changes.
-
----
-*To get started with the app's code, take a look at `src/app/page.tsx`.*
