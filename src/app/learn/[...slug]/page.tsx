@@ -12,10 +12,12 @@ import { FlashcardView } from '@/components/learn/flashcard-view';
 import { LearningTracker } from '@/hooks/use-learning-tracker';
 import { useTranslation } from '@/context/language-context';
 import { LanguageToggle } from '@/components/language-toggle';
+import { use } from 'react';
 
-export default function LearnPage({ params }: { params: { slug: string[] } }) {
+export default function LearnPage({ params }: { params: Promise<{ slug: string[] }> }) {
   // In client components, params are not a promise, so direct access is safe.
-  const [gradeId, subjectId, chapterId] = params.slug;
+  const {slug} = use(params)
+  const [gradeId, subjectId, chapterId] = slug;
   const { t } = useTranslation();
 
   const grade = AppData.find(g => g.id === gradeId);
