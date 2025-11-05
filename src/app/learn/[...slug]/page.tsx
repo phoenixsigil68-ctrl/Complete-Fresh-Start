@@ -14,6 +14,7 @@ import { useTranslation } from '@/context/language-context';
 import { LanguageToggle } from '@/components/language-toggle';
 
 export default function LearnPage({ params }: { params: { slug: string[] } }) {
+  // In client components, params are not a promise, so direct access is safe.
   const [gradeId, subjectId, chapterId] = params.slug;
   const { t } = useTranslation();
 
