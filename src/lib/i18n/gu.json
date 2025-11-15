@@ -28,7 +28,8 @@
         "mainPage": "મુખ્ય પૃષ્ઠ",
         "contentTab": "અભ્યાસક્રમ",
         "flashcardsTab": "ફ્લેશકાર્ડ્સ",
-        "quizTab": "ક્વિઝ"
+        "quizTab": "ક્વિઝ",
+        "paperTab": "પેપર"
     },
     "contentDisplay": {
         "textbook": "પાઠ્યપુસ્તક",
@@ -110,6 +111,25 @@
         "quizReadyDescription": "AI દ્વારા બનાવેલ નવા પ્રશ્નો નીચે મુજબ છે.",
         "errorOccurred": "એક ભૂલ આવી"
     },
+     "paperGenerator": {
+        "title": "AI પેપર જનરેટર",
+        "description": "તમારી પરીક્ષાઓ માટે પ્રેક્ટિસ કરવા માટે આ પ્રકરણ માટે એક નમૂનારૂપ પરીક્ષા પેપર બનાવો.",
+        "createButton": "પેપર બનાવો",
+        "creating": "બનાવી રહ્યું છે...",
+        "generating": "AI તમારા માટે એક નમૂનારૂપ પેપર તૈયાર કરી રહ્યું છે. આમાં થોડો સમય લાગી શકે છે.",
+        "createNew": "નવું પેપર બનાવો",
+        "creatingNew": "ફરીથી બનાવી રહ્યું છે...",
+        "errorTitle": "ભૂલ",
+        "initialPrompt": "નમૂનારૂપ પરીક્ષા પેપર બનાવવા માટે બટન પર ક્લિક કરો.",
+        "success": "પેપર સફળતાપૂર્વક બનાવવામાં આવ્યું!",
+        "totalMarks": "કુલ ગુણ: {marks}",
+        "mcqs": "બહુવિકલ્પ પ્રશ્નો",
+        "shortAnswer": "ટૂંકા જવાબવાળા પ્રશ્નો",
+        "longAnswer": "લાંબા જવાબવાળા પ્રશ્નો",
+        "marks": "ગુણ",
+        "print": "પેપર પ્રિન્ટ કરો",
+        "endOfPaper": "--- પેપર સમાપ્ત ---"
+    },
     "errors": {
         "invalidGrade": "અમાન્ય ધોરણ સ્તર.",
         "unknown": "એક અજ્ઞાત ભૂલ આવી.",
@@ -122,7 +142,8 @@
         "flashcardCreationFailed": "ફ્લેશકાર્ડ્સ બનાવવામાં નિષ્ફળ: {message}",
         "summaryCreationFailed": "સારાંશ બનાવવામાં નિષ્ફળ: {message}",
         "imageQuizFailed": "ક્વિઝ બનાવવામાં નિષ્ફળ: {message}",
-        "imageRequired": "કૃપા કરીને એક છબી અપલોડ કરો."
+        "imageRequired": "કૃપા કરીને એક છબી અપલોડ કરો.",
+        "paperCreationFailed": "પેપર બનાવવામાં નિષ્ફળ: {message}"
     },
     "quotes": [
         {

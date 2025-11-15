@@ -13,10 +13,10 @@ import { LearningTracker } from '@/hooks/use-learning-tracker';
 import { useTranslation } from '@/context/language-context';
 import { LanguageToggle } from '@/components/language-toggle';
 import { use } from 'react';
+import { PaperGenerator } from '@/components/learn/paper-generator';
 
 export default function LearnPage({ params }: { params: Promise<{ slug: string[] }> }) {
-  // In client components, params are not a promise, so direct access is safe.
-  const {slug} = use(params)
+  const {slug} = use(params);
   const [gradeId, subjectId, chapterId] = slug;
   const { t } = useTranslation();
 
@@ -51,10 +51,11 @@ export default function LearnPage({ params }: { params: Promise<{ slug: string[]
         </header>
 
         <Tabs defaultValue="content" className="w-full">
-          <TabsList className="grid w-full grid-cols-1 md:grid-cols-3 md:w-fit mx-auto md:mx-0 bg-card/80 backdrop-blur-sm border shadow-md">
+          <TabsList className="grid w-full grid-cols-1 md:grid-cols-4 md:w-fit mx-auto md:mx-0 bg-card/80 backdrop-blur-sm border shadow-md">
             <TabsTrigger value="content">{t('learn.contentTab')}</TabsTrigger>
             <TabsTrigger value="flashcards">{t('learn.flashcardsTab')}</TabsTrigger>
             <TabsTrigger value="quiz">{t('learn.quizTab')}</TabsTrigger>
+            <TabsTrigger value="paper">{t('learn.paperTab')}</TabsTrigger>
           </TabsList>
           <TabsContent value="content" className="mt-4">
             <ContentDisplay chapter={chapter} grade={grade} subject={subject} />
@@ -64,6 +65,9 @@ export default function LearnPage({ params }: { params: Promise<{ slug: string[]
           </TabsContent>
           <TabsContent value="quiz" className="mt-4">
             <QuizView chapter={chapter} grade={grade} subject={subject} />
+          </TabsContent>
+           <TabsContent value="paper" className="mt-4">
+            <PaperGenerator chapter={chapter} grade={grade} subject={subject} />
           </TabsContent>
         </Tabs>
       </div>

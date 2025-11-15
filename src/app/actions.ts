@@ -5,6 +5,7 @@ import type { GenerateQuizQuestionsOutput } from '@/ai/flows/generate-quiz-quest
 import { generateFlashcards, type GenerateFlashcardsOutput } from '@/ai/flows/generate-flashcards-flow';
 import { summarizeContent } from '@/ai/flows/summarize-content-flow';
 import { generateQuizFromImage, type GenerateQuizFromImageOutput } from '@/ai/flows/generate-quiz-from-image-flow';
+import { generatePaper, type GeneratePaperOutput } from '@/ai/flows/generate-paper-flow';
 import guTranslations from '@/lib/i18n/gu.json';
 import enTranslations from '@/lib/i18n/en.json';
 
@@ -159,4 +160,35 @@ export async function createQuizFromImageAction(
         const message = error instanceof Error ? error.message : t('errors.unknown');
         return { ...prevState, success: false, message: t('errors.imageQuizFailed', { message }) };
     }
+}
+
+export type CreatePaperState = {
+  success: boolean;
+  message: string;
+  data: GeneratePaperOutput | null;
+};
+
+export async function createPaperAction(
+  chapterContent: string,
+  grade: string,
+  subject: string,
+  lang: 'gu' | 'en' = 'gu'
+): Promise<CreatePaperState> {
+  const t = getT(lang);
+  if (!chapterContent) {
+    return { success: false, message: t('errors.contentMissing'), data: null };
+  }
+
+  try {
+    const paperData = await generatePaper({
+      chapterContent,
+      grade,
+      subject,
+    });
+    return { success: true, message: t('paperGenerator.success'), data: paperData };
+  } catch (error) {
+    console.error(error);
+    const message = error instanceof Error ? error.message : t('errors.unknown');
+    return { success: false, message: t('errors.paperCreationFailed', { message }), data: null };
+  }
 }
