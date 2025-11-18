@@ -10,7 +10,6 @@
 
 import {ai} from '@/ai/genkit';
 import {googleAI} from '@genkit-ai/googleai';
-import {generate} from 'genkit';
 import {z} from 'genkit';
 
 const GenerateFlashcardsInputSchema = z.object({
@@ -40,7 +39,7 @@ const generateFlashcardsFlow = ai.defineFlow(
     outputSchema: GenerateFlashcardsOutputSchema,
   },
   async ({chapterContent, count}) => {
-    const {output} = await generate({
+    const {output} = await ai.generate({
       model: googleAI.model('gemini-2.5-flash'),
       output: {
         schema: GenerateFlashcardsOutputSchema,
