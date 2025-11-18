@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState } from 'react';
@@ -19,67 +20,85 @@ function PaperDisplay({ paper }: { paper: NonNullable<CreatePaperState['data']> 
   };
 
   return (
-    <Card className="mt-6 print:shadow-none print:border-none">
-      <CardHeader className="flex flex-row justify-between items-start">
-        <div>
-          <CardTitle className="text-2xl font-bold">{paper.title}</CardTitle>
-          <CardDescription>{t('paperGenerator.totalMarks', { marks: paper.totalMarks })}</CardDescription>
-        </div>
-        <Button variant="outline" size="icon" onClick={handlePrint} className="print:hidden">
-          <Printer className="h-4 w-4" />
-          <span className="sr-only">{t('paperGenerator.print')}</span>
-        </Button>
-      </CardHeader>
-      <CardContent className="space-y-8">
-        {/* Multiple Choice Questions */}
-        <section>
-          <h3 className="text-lg font-semibold border-b pb-2 mb-4">{t('paperGenerator.mcqs')} (5 {t('paperGenerator.marks')})</h3>
-          <div className="space-y-4">
-            {paper.multipleChoiceQuestions.map((q, index) => (
-              <div key={`mcq-${index}`}>
-                <p className="font-semibold">{index + 1}. {q.question}</p>
-                <div className="grid grid-cols-2 gap-2 mt-2 pl-4">
-                  {q.options.map((opt, i) => <p key={i}>({String.fromCharCode(97 + i)}) {opt}</p>)}
+    <div className="printable-paper">
+       <style>{`
+          @media print {
+            body * {
+              visibility: hidden;
+            }
+            .printable-paper, .printable-paper * {
+              visibility: visible;
+            }
+            .printable-paper {
+              position: absolute;
+              left: 0;
+              top: 0;
+              width: 100%;
+            }
+          }
+        `}</style>
+      <Card className="mt-6 print:shadow-none print:border-none">
+        <CardHeader className="flex flex-row justify-between items-start">
+          <div>
+            <CardTitle className="text-2xl font-bold">{paper.title}</CardTitle>
+            <CardDescription>{t('paperGenerator.totalMarks', { marks: paper.totalMarks })}</CardDescription>
+          </div>
+          <Button variant="outline" size="icon" onClick={handlePrint} className="print:hidden">
+            <Printer className="h-4 w-4" />
+            <span className="sr-only">{t('paperGenerator.print')}</span>
+          </Button>
+        </CardHeader>
+        <CardContent className="space-y-8">
+          {/* Multiple Choice Questions */}
+          <section>
+            <h3 className="text-lg font-semibold border-b pb-2 mb-4">{t('paperGenerator.mcqs')} (5 {t('paperGenerator.marks')})</h3>
+            <div className="space-y-4">
+              {paper.multipleChoiceQuestions.map((q, index) => (
+                <div key={`mcq-${index}`}>
+                  <p className="font-semibold">{index + 1}. {q.question}</p>
+                  <div className="grid grid-cols-2 gap-2 mt-2 pl-4">
+                    {q.options.map((opt, i) => <p key={i}>({String.fromCharCode(97 + i)}) {opt}</p>)}
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        </section>
+              ))}
+            </div>
+          </section>
 
-        <Separator />
+          <Separator />
 
-        {/* Short Answer Questions */}
-        <section>
-          <h3 className="text-lg font-semibold border-b pb-2 mb-4">{t('paperGenerator.shortAnswer')} (10 {t('paperGenerator.marks')})</h3>
-          <div className="space-y-4">
-            {paper.shortAnswerQuestions.map((q, index) => (
-              <div key={`saq-${index}`}>
-                <p className="font-semibold">{index + 1}. {q.question}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          {/* Short Answer Questions */}
+          <section>
+            <h3 className="text-lg font-semibold border-b pb-2 mb-4">{t('paperGenerator.shortAnswer')} (10 {t('paperGenerator.marks')})</h3>
+            <div className="space-y-4">
+              {paper.shortAnswerQuestions.map((q, index) => (
+                <div key={`saq-${index}`}>
+                  <p className="font-semibold">{index + 1}. {q.question}</p>
+                </div>
+              ))}
+            </div>
+          </section>
 
-        <Separator />
+          <Separator />
 
-        {/* Long Answer Questions */}
-        <section>
-          <h3 className="text-lg font-semibold border-b pb-2 mb-4">{t('paperGenerator.longAnswer')} (10 {t('paperGenerator.marks')})</h3>
-          <div className="space-y-4">
-            {paper.longAnswerQuestions.map((q, index) => (
-              <div key={`laq-${index}`}>
-                <p className="font-semibold">{index + 1}. {q.question}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          {/* Long Answer Questions */}
+          <section>
+            <h3 className="text-lg font-semibold border-b pb-2 mb-4">{t('paperGenerator.longAnswer')} (10 {t('paperGenerator.marks')})</h3>
+            <div className="space-y-4">
+              {paper.longAnswerQuestions.map((q, index) => (
+                <div key={`laq-${index}`}>
+                  <p className="font-semibold">{index + 1}. {q.question}</p>
+                </div>
+              ))}
+            </div>
+          </section>
 
-        <Separator />
-        
-        <div className="text-center font-bold text-primary pt-4">{t('paperGenerator.endOfPaper')}</div>
+          <Separator />
+          
+          <div className="text-center font-bold text-primary pt-4">{t('paperGenerator.endOfPaper')}</div>
 
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+    </div>
   );
 }
 
@@ -112,22 +131,6 @@ export function PaperGenerator({ chapter, grade, subject }: { chapter: Chapter; 
         <CardDescription>{t('paperGenerator.description')}</CardDescription>
       </CardHeader>
       <CardContent className="flex flex-col items-center justify-center space-y-6">
-        <style>{`
-          @media print {
-            body * {
-              visibility: hidden;
-            }
-            .printable-paper, .printable-paper * {
-              visibility: visible;
-            }
-            .printable-paper {
-              position: absolute;
-              left: 0;
-              top: 0;
-              width: 100%;
-            }
-          }
-        `}</style>
         
         {!state?.data && (
           <Button onClick={handleGenerate} disabled={isLoading} size="lg">
@@ -154,7 +157,7 @@ export function PaperGenerator({ chapter, grade, subject }: { chapter: Chapter; 
 
         {state?.success && state.data && (
           <div className="w-full">
-            <div className="text-center">
+            <div className="text-center mb-4">
               <Button onClick={handleGenerate} disabled={isLoading} variant="outline">
                 {isLoading ? (
                   <>
@@ -169,9 +172,7 @@ export function PaperGenerator({ chapter, grade, subject }: { chapter: Chapter; 
                 )}
               </Button>
             </div>
-            <div className="printable-paper">
-              <PaperDisplay paper={state.data} />
-            </div>
+            <PaperDisplay paper={state.data} />
           </div>
         )}
 
