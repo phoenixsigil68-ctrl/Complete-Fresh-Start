@@ -145,13 +145,23 @@ export const AppData: Grade[] = [
         id: 'maths',
         name: 'ગણિત',
         chapters: [
-          { id: 'chapter-1', name: 'પ્રકરણ ૧: ગણ', content: 'ગણ અને તેના પ્રકારો વિશેની સમજ.', textbookUrl: 'https://www.selfstudys.com/', quiz: [] },
+          { id: 'chapter-1', name: 'પ્રકરણ ૧: ગણ', content: 'ગણ અને તેના પ્રકારો વિશેની સમજ.', textbookUrl: 'https://www.selfstudys.com/', quiz: [
+            
+              {
+                question: "Value of the Pie",
+                options: ["3", "2", "3.14", "4.14"],
+                correctAnswerIndex: 2,
+              }
+            
+          ] },
           { id: 'chapter-2', name: 'પ્રકરણ ૨: સંબંધ અને વિધેય', content: 'સંબંધો અને વિધેયોની સંકલ્પના.', textbookUrl: 'https://www.selfstudys.com/', quiz: [] },
           { id: 'chapter-3', name: 'પ્રકરણ ૩: ત્રિકોણમિતીય વિધેયો', content: 'ત્રિકોણમિતીય વિધેયો અને તેમના ગુણધર્મો.', textbookUrl: 'https://www.selfstudys.com/', quiz: [] },
           { id: 'chapter-4', name: 'પ્રકરણ ૪: ગણિતીય અનુમાનનો સિદ્ધાંત', content: 'ગણિતીય અનુમાનના સિદ્ધાંતની સમજ.', textbookUrl: 'https://www.selfstudys.com/', quiz: [] },
           { id: 'chapter-5', name: 'પ્રકરણ ૫: સંકર સંખ્યાઓ અને દ્વિઘાત સમીકરણો', content: 'સંકર સંખ્યાઓ અને તેમના ગુણધર્મો.', textbookUrl: 'https://www.selfstudys.com/', quiz: [] },
           { id: 'chapter-6', name: 'પ્રકરણ ૬: સુરેખ અસમતાઓ', content: 'સુરેખ અસમતાઓના ઉકેલ.', textbookUrl: 'https://www.selfstudys.com/', quiz: [] },
+          
         ],
+        
       },
       {
         id: 'chemistry',
