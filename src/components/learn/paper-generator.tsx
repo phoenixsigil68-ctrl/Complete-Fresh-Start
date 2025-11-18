@@ -12,41 +12,18 @@ import { useToast } from '@/hooks/use-toast';
 import { useTranslation } from '@/context/language-context';
 import { Separator } from '../ui/separator';
 
-function PaperDisplay({ paper }: { paper: NonNullable<CreatePaperState['data']> }) {
+function PaperDisplay({ paper, onPrint }: { paper: NonNullable<CreatePaperState['data']>, onPrint: () => void }) {
   const { t } = useTranslation();
   
-  const handlePrint = () => {
-    window.print();
-  };
-
   return (
     <div className="printable-paper">
-       <style>{`
-          @media print {
-            body * {
-              visibility: hidden;
-            }
-            .printable-paper, .printable-paper * {
-              visibility: visible;
-            }
-            .printable-paper {
-              position: absolute;
-              left: 0;
-              top: 0;
-              width: 100%;
-            }
-            .print-hidden {
-                display: none;
-            }
-          }
-        `}</style>
       <Card className="mt-6 print:shadow-none print:border-none">
         <CardHeader className="flex flex-row justify-between items-start">
           <div>
             <CardTitle className="text-2xl font-bold">{paper.title}</CardTitle>
             <CardDescription>{t('paperGenerator.totalMarks', { marks: paper.totalMarks })}</CardDescription>
           </div>
-          <Button variant="outline" onClick={handlePrint} className="print-hidden">
+          <Button variant="outline" onClick={onPrint} className="print-hidden">
             <Download className="mr-2 h-4 w-4" />
             {t('paperGenerator.print')}
           </Button>
@@ -127,8 +104,31 @@ export function PaperGenerator({ chapter, grade, subject }: { chapter: Chapter; 
     }
   };
 
+  const handlePrint = () => {
+    window.print();
+  };
+
   return (
     <Card>
+      <style>{`
+          @media print {
+            body * {
+              visibility: hidden;
+            }
+            .printable-paper, .printable-paper * {
+              visibility: visible;
+            }
+            .printable-paper {
+              position: absolute;
+              left: 0;
+              top: 0;
+              width: 100%;
+            }
+            .print-hidden {
+                display: none;
+            }
+          }
+        `}</style>
       <CardHeader>
         <CardTitle>{t('paperGenerator.title')}</CardTitle>
         <CardDescription>{t('paperGenerator.description')}</CardDescription>
@@ -175,7 +175,7 @@ export function PaperGenerator({ chapter, grade, subject }: { chapter: Chapter; 
                 )}
               </Button>
             </div>
-            <PaperDisplay paper={state.data} />
+            <PaperDisplay paper={state.data} onPrint={handlePrint} />
           </div>
         )}
 
