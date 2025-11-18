@@ -63,7 +63,7 @@ Grade: {{grade}}
 Subject: {{subject}}
 Chapter Content:
 ---
-${'{{{'}chapterContent{'}}}'}
+{{{chapterContent}}}
 ---
 
 Your response must be a JSON object matching the specified output schema.`,
