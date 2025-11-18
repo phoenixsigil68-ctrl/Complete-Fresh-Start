@@ -20,7 +20,7 @@ function PaperDisplay({ paper }: { paper: NonNullable<CreatePaperState['data']> 
 
   return (
     <Card className="mt-6 print:shadow-none print:border-none">
-      <CardHeader className="flex flex-row justify-between items-start print:flex-row-reverse">
+      <CardHeader className="flex flex-row justify-between items-start">
         <div>
           <CardTitle className="text-2xl font-bold">{paper.title}</CardTitle>
           <CardDescription>{t('paperGenerator.totalMarks', { marks: paper.totalMarks })}</CardDescription>
