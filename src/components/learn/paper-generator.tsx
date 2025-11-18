@@ -5,7 +5,7 @@ import { useState } from 'react';
 import type { Chapter, Grade, Subject } from '@/lib/types';
 import { createPaperAction, type CreatePaperState } from '@/app/actions';
 import { Button } from '../ui/button';
-import { Loader2, Sparkles, AlertTriangle, Printer } from 'lucide-react';
+import { Loader2, Sparkles, AlertTriangle, Download } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
 import { Alert, AlertTitle, AlertDescription } from '../ui/alert';
 import { useToast } from '@/hooks/use-toast';
@@ -35,6 +35,9 @@ function PaperDisplay({ paper }: { paper: NonNullable<CreatePaperState['data']> 
               top: 0;
               width: 100%;
             }
+            .print-hidden {
+                display: none;
+            }
           }
         `}</style>
       <Card className="mt-6 print:shadow-none print:border-none">
@@ -43,9 +46,9 @@ function PaperDisplay({ paper }: { paper: NonNullable<CreatePaperState['data']> 
             <CardTitle className="text-2xl font-bold">{paper.title}</CardTitle>
             <CardDescription>{t('paperGenerator.totalMarks', { marks: paper.totalMarks })}</CardDescription>
           </div>
-          <Button variant="outline" size="icon" onClick={handlePrint} className="print:hidden">
-            <Printer className="h-4 w-4" />
-            <span className="sr-only">{t('paperGenerator.print')}</span>
+          <Button variant="outline" onClick={handlePrint} className="print-hidden">
+            <Download className="mr-2 h-4 w-4" />
+            {t('paperGenerator.print')}
           </Button>
         </CardHeader>
         <CardContent className="space-y-8">
@@ -157,7 +160,7 @@ export function PaperGenerator({ chapter, grade, subject }: { chapter: Chapter; 
 
         {state?.success && state.data && (
           <div className="w-full">
-            <div className="text-center mb-4">
+            <div className="text-center mb-4 print-hidden">
               <Button onClick={handleGenerate} disabled={isLoading} variant="outline">
                 {isLoading ? (
                   <>

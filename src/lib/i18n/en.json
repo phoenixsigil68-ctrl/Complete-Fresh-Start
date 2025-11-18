@@ -127,7 +127,7 @@
         "shortAnswer": "Short Answer Questions",
         "longAnswer": "Long Answer Questions",
         "marks": "Marks",
-        "print": "Print Paper",
+        "print": "Print / Download PDF",
         "endOfPaper": "--- End of Paper ---"
     },
     "errors": {
