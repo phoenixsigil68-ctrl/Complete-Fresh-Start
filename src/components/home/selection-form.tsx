@@ -55,7 +55,7 @@ export function SelectionForm() {
   const availableGrades = AppData.filter((grade) => grade.subjects.length > 0);
 
   return (
-    <>
+    <div>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="space-y-2">
           <Select onValueChange={setSelectedGrade} value={selectedGrade}>
@@ -129,7 +129,7 @@ export function SelectionForm() {
           {t("selectionForm.startButton")}
         </Button>
       </form>
-      <div className="text-2xl text-white font-bold">Hello</div>
-    </>
+      <div className="text-2xl text-white font-bold">Hello How are you?</div>
+    </div>
   );
 }
