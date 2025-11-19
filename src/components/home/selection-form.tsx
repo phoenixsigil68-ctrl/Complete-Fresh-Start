@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import SpotlightCard from "../SpotlightCard";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
@@ -24,6 +25,34 @@ export function SelectionForm() {
 
   const [subjects, setSubjects] = useState<Subject[]>([]);
   const [chapters, setChapters] = useState<Chapter[]>([]);
+
+  const carouselItems = [
+    {
+      title: "Text Animations",
+      description: "Cool text animations for your projects.",
+      id: 1,
+    },
+    {
+      title: "Animations",
+      description: "Smooth animations for your projects.",
+      id: 2,
+    },
+    {
+      title: "Components",
+      description: "Reusable components for your projects.",
+      id: 3,
+    },
+    {
+      title: "Backgrounds",
+      description: "Beautiful backgrounds and patterns for your projects.",
+      id: 4,
+    },
+    {
+      title: "Common UI",
+      description: "Common UI components are coming soon!",
+      id: 5,
+    },
+  ];
 
   useEffect(() => {
     if (selectedGrade) {
@@ -129,9 +158,6 @@ export function SelectionForm() {
           {t("selectionForm.startButton")}
         </Button>
       </form>
-      <div className="text-2xl text-white font-bold">
-        Hello How are you? This is the testing for redeploy
-      </div>
     </div>
   );
 }
