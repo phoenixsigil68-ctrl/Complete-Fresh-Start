@@ -129,7 +129,9 @@ export function SelectionForm() {
           {t("selectionForm.startButton")}
         </Button>
       </form>
-      <div className="text-2xl text-white font-bold">Hello How are you?</div>
+      <div className="text-2xl text-white font-bold">
+        Hello How are you? This is the testing for redeploy
+      </div>
     </div>
   );
 }
