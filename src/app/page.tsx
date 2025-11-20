@@ -15,6 +15,7 @@ import {
 import { FileImage, GraduationCap, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { LanguageToggle } from "@/components/language-toggle";
+import RotatingText from "@/components/RotatingText";
 import { useTranslation } from "@/context/language-context";
 import { useClerk, UserButton, useUser } from "@clerk/nextjs";
 
@@ -85,6 +86,27 @@ export default function HomePage() {
               </Card>
               <QuotesSlider />
             </div>
+          </div>
+          <div className="mt-5 text-3xl flex justify-center items-center gap-5">
+            Do Something
+            <RotatingText
+              texts={["Creative", "Productive", "Cool!"]}
+              mainClassName="px-2 sm:px-2 md:px-3 bg-[#5227FF] text-white font-bold overflow-hidden py-0.5 sm:py-1 md:py-2 justify-center items-center rounded-lg"
+              staggerFrom={"last"}
+              initial={{ y: "100%" }}
+              animate={{ y: 0 }}
+              exit={{ y: "-120%" }}
+              staggerDuration={0.025}
+              splitLevelClassName="overflow-hidden pb-0.5 sm:pb-1 md:pb-1"
+              transition={{ type: "spring", damping: 30, stiffness: 400 }}
+              rotationInterval={3000}
+            />
+          </div>
+          <div className="mt-10">
+            <p className="text-sm text-gray-300 text-center">
+              The AI can response some inaccurate information so double-check
+              the resopnse
+            </p>
           </div>
         </main>
       </div>
