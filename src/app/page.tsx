@@ -25,9 +25,6 @@ function Header() {
   const { t } = useTranslation();
   return (
     <header className="relative text-center mb-8 pt-8">
-      <div className="absolute top-4 left-4">
-        {!user ? <Button onClick={openSignIn}>Login</Button> : <UserButton />}
-      </div>
       <div className="absolute top-4 right-4 flex items-center gap-4">
         <LanguageToggle />
       </div>
