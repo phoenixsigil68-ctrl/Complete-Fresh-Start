@@ -44,9 +44,6 @@ export default function RootLayout({
         <body className="font-body antialiased">
           <LanguageProvider>
             <div className="relative min-h-screen">{children}</div>
-            <div className="absolute top-0 right-0 bottom-5">
-              <Button className="rounded-full">AI</Button>
-            </div>
             <Toaster />
           </LanguageProvider>
         </body>
