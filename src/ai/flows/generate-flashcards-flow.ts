@@ -1,4 +1,4 @@
-'use server';
+"use server";
 
 /**
  * @fileOverview AI-powered flashcard generator for students.
@@ -8,39 +8,55 @@
  * - GenerateFlashcardsOutput - The return type for the generateFlashcards function.
  */
 
-import {ai} from '@/ai/genkit';
-import {googleAI} from '@genkit-ai/googleai';
-import {z} from 'genkit';
+import { ai } from "@/ai/genkit";
+import { googleAI } from "@genkit-ai/googleai";
+import { z } from "genkit";
 
 const GenerateFlashcardsInputSchema = z.object({
-  chapterContent: z.string().describe('The full text content of the chapter.'),
-  count: z.number().int().min(1).max(20).default(10).describe('The number of flashcards to generate.'),
+  chapterContent: z.string().describe("The full text content of the chapter."),
+  count: z
+    .number()
+    .int()
+    .min(1)
+    .max(20)
+    .default(10)
+    .describe("The number of flashcards to generate."),
 });
-export type GenerateFlashcardsInput = z.infer<typeof GenerateFlashcardsInputSchema>;
+export type GenerateFlashcardsInput = z.infer<
+  typeof GenerateFlashcardsInputSchema
+>;
 
 const FlashcardSchema = z.object({
-  term: z.string().describe('The key term or concept in Gujarati.'),
-  definition: z.string().describe('The definition or explanation of the term in simple Gujarati.'),
+  term: z.string().describe("The key term or concept in Gujarati."),
+  definition: z
+    .string()
+    .describe("The definition or explanation of the term in simple Gujarati."),
 });
 
 const GenerateFlashcardsOutputSchema = z.object({
-  flashcards: z.array(FlashcardSchema).describe('An array of generated flashcards.'),
+  flashcards: z
+    .array(FlashcardSchema)
+    .describe("An array of generated flashcards."),
 });
-export type GenerateFlashcardsOutput = z.infer<typeof GenerateFlashcardsOutputSchema>;
+export type GenerateFlashcardsOutput = z.infer<
+  typeof GenerateFlashcardsOutputSchema
+>;
 
-export async function generateFlashcards(input: GenerateFlashcardsInput): Promise<GenerateFlashcardsOutput> {
+export async function generateFlashcards(
+  input: GenerateFlashcardsInput
+): Promise<GenerateFlashcardsOutput> {
   return generateFlashcardsFlow(input);
 }
 
 const generateFlashcardsFlow = ai.defineFlow(
   {
-    name: 'generateFlashcardsFlow',
+    name: "generateFlashcardsFlow",
     inputSchema: GenerateFlashcardsInputSchema,
     outputSchema: GenerateFlashcardsOutputSchema,
   },
-  async ({chapterContent, count}) => {
-    const {output} = await ai.generate({
-      model: googleAI.model('gemini-2.5-flash'),
+  async ({ chapterContent, count }) => {
+    const { output } = await ai.generate({
+      model: googleAI.model("gemini-2.5-flash"),
       output: {
         schema: GenerateFlashcardsOutputSchema,
       },

@@ -3,6 +3,7 @@ import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { LanguageProvider } from "@/context/language-context";
 import { ClerkProvider } from "@clerk/nextjs";
+import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
   title: "વિદ્યાર્થી સહાયક",
@@ -43,6 +44,9 @@ export default function RootLayout({
         <body className="font-body antialiased">
           <LanguageProvider>
             <div className="relative min-h-screen">{children}</div>
+            <div className="absolute top-0 right-0 bottom-5">
+              <Button className="rounded-full">AI</Button>
+            </div>
             <Toaster />
           </LanguageProvider>
         </body>
