@@ -110,22 +110,6 @@ export default function HomePage() {
               it
             </p>
           </div>
-          <div className="mt-8 border-t-2 border-gray-700">
-            <div className="grid grid-cols-2 grid-rows-1 justify-items-center items-center text-2xl h-50">
-              <Link
-                href={"/about"}
-                className="hover:underline hover:text-blue-700 hover:cursor-pointer transition-colors duration-300"
-              >
-                About
-              </Link>
-              <Link
-                href={"/contact"}
-                className="hover:underline hover:text-blue-700 hover:cursor-pointer transition-colors duration-300"
-              >
-                Contact
-              </Link>
-            </div>
-          </div>
         </main>
       </div>
     </div>
