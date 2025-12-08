@@ -17,9 +17,8 @@ const GenerateFlashcardsInputSchema = z.object({
   count: z
     .number()
     .int()
-    .min(1)
-    .max(20)
-    .default(10)
+    .min(15)
+    .max(30)
     .describe("The number of flashcards to generate."),
 });
 export type GenerateFlashcardsInput = z.infer<

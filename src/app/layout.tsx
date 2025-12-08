@@ -41,7 +41,7 @@ export default function RootLayout({
           <meta name="mobile-web-app-capable" content="yes" />
           <meta name="theme-color" content="#09090B" />
         </head>
-        <body className="font-body antialiased nunito-sans">
+        <body className="font-body mukta-vaani-regular antialiased">
           <LanguageProvider>
             <div className="relative min-h-screen ">{children}</div>
             <Toaster />
