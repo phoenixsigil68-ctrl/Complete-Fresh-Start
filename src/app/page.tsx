@@ -3,7 +3,6 @@
 import { DailyProgress } from "@/components/home/daily-progress";
 import { QuotesSlider } from "@/components/home/quotes-slider";
 import { SelectionForm } from "@/components/home/selection-form";
-import MagicBento from "@/components/MagicBento";
 import { Button } from "@/components/ui/button";
 import {
   Card,
