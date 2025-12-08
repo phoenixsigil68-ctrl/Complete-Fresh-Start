@@ -18,10 +18,9 @@ import { LanguageToggle } from "@/components/language-toggle";
 import RotatingText from "@/components/RotatingText";
 import { useTranslation } from "@/context/language-context";
 import { useClerk, UserButton, useUser } from "@clerk/nextjs";
+import CardNav from "@/components/CardNav";
 
 function Header() {
-  const { user } = useUser();
-  const { openSignIn } = useClerk();
   const { t } = useTranslation();
   return (
     <header className="relative text-center mb-8 pt-8">
@@ -48,7 +47,7 @@ export default function HomePage() {
       <div className="min-h-screen bg-background/90 backdrop-blur-sm">
         <main className="container mx-auto p-4 md:p-8">
           <Header />
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 ">
             <Card className="bg-card/80 backdrop-blur-sm shadow-lg border">
               <CardHeader>
                 <CardTitle>{t("home.selectionCard.title")}</CardTitle>
@@ -84,6 +83,12 @@ export default function HomePage() {
               <QuotesSlider />
             </div>
           </div>
+          <Card className="flex flex-col justify-center items-center w-full mt-10 gap-5 py-10 px-15 text-2xl font-bold">
+            Checkout our Converso App to learn the concepts lively from AI 👇
+            <a href="https://converso-phi-five.vercel.app/" target="_blank">
+              <Button className="w-60 text-xl">Check it Now</Button>
+            </a>
+          </Card>
           <div className="mt-5 text-3xl flex justify-center items-center gap-5">
             Do Something
             <RotatingText
@@ -100,10 +105,26 @@ export default function HomePage() {
             />
           </div>
           <div className="mt-10">
-            <p className="text-sm text-gray-300 text-center">
-              The AI can response some inaccurate information so double-check
-              the resopnse
+            <p className="text-[14px] text-gray-300 text-center">
+              The AI might response some inaccurate information so double-check
+              it
             </p>
+          </div>
+          <div className="mt-8 border-t-2 border-gray-700">
+            <div className="grid grid-cols-2 grid-rows-1 justify-items-center items-center text-2xl h-50">
+              <Link
+                href={"/about"}
+                className="hover:underline hover:text-blue-700 hover:cursor-pointer transition-colors duration-300"
+              >
+                About
+              </Link>
+              <Link
+                href={"/contact"}
+                className="hover:underline hover:text-blue-700 hover:cursor-pointer transition-colors duration-300"
+              >
+                Contact
+              </Link>
+            </div>
           </div>
         </main>
       </div>
